@@ -277,6 +277,169 @@
   <div id="device-container" class="phone-shell relative">
 
     <!-- ============================================== -->
+    <!-- PREMIER VIEW: FULL-SCREEN LOGIN & ONBOARDING GATEWAY (FIRST ON LAUNCH) -->
+    <!-- ============================================== -->
+    <div id="auth-gateway-view" class="absolute inset-0 z-[60] bg-[#FAF8F3] flex flex-col p-5 overflow-y-auto no-scrollbar">
+      <!-- Top Branding & Mascot Badge -->
+      <div class="flex items-center justify-between pt-2 pb-1">
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-500 p-0.5 shadow-sm flex items-center justify-center">
+            <span class="font-extrabold text-sm text-ust-obsidian">TR</span>
+          </div>
+          <div>
+            <h2 class="text-card-title font-extrabold text-ust-obsidian tracking-tight">TigRent UST</h2>
+            <span class="text-[10px] text-ust-espresso">Peer-to-Peer Academic Essentials</span>
+          </div>
+        </div>
+
+        <span class="apple-badge bg-amber-100 text-ust-deepGold text-[10px] font-bold">
+          AY 2026-2027
+        </span>
+      </div>
+
+      <!-- Welcome Banner & Value Propositions (BMC Aligned) -->
+      <div class="my-2.5">
+        <h1 class="text-screen-title font-extrabold text-ust-obsidian tracking-tight">Thomasian Identity Login</h1>
+        <p class="text-desc-body text-ust-espresso mt-0.5">Secure, verified student equipment rental system backed by SheerID.</p>
+
+        <!-- BMC Value Proposition Badges -->
+        <div class="grid grid-cols-2 gap-1.5 mt-2 text-[10px]">
+          <div class="bg-white/80 border border-stone-200/80 rounded-xl p-1.5 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span class="font-semibold text-ust-obsidian truncate">SheerID Student Vetted</span>
+          </div>
+          <div class="bg-white/80 border border-stone-200/80 rounded-xl p-1.5 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-ust-deepGold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <span class="font-semibold text-ust-obsidian truncate">Escrow Anti-Theft Deposit</span>
+          </div>
+          <div class="bg-white/80 border border-stone-200/80 rounded-xl p-1.5 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-blue-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="font-semibold text-ust-obsidian truncate">UST Building Lobbies</span>
+          </div>
+          <div class="bg-white/80 border border-stone-200/80 rounded-xl p-1.5 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg>
+            <span class="font-semibold text-ust-obsidian truncate">10% Low Platform Fee</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-End Role Selector Tabs on Login -->
+      <div class="mb-3">
+        <label class="text-micro-label text-ust-espresso font-semibold block mb-1">Select Access Portal / Role:</label>
+        <div class="bg-black/5 p-1 rounded-2xl flex items-center gap-1">
+          <button id="login-tab-borrower" onclick="selectLoginRole('borrower')" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-white text-ust-obsidian shadow-sm flex items-center justify-center gap-1.5 spring-press">
+            <svg class="w-3.5 h-3.5 text-ust-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <span>Borrower Portal</span>
+          </button>
+          <button id="login-tab-lender" onclick="selectLoginRole('lender')" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all text-ust-espresso flex items-center justify-center gap-1.5 spring-press">
+            <svg class="w-3.5 h-3.5 text-ust-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Lender Studio</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Demo Profiles for Evaluators -->
+      <div class="mb-3">
+        <span class="text-micro-label text-ust-espresso font-semibold block mb-1.5">One-Click Test Personas:</span>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="applyDemoUser('borrower')" class="text-left p-2 rounded-xl bg-white border border-stone-200 hover:border-amber-400 spring-press flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-ust-obsidian block truncate">Sophia Reyes</span>
+              <span class="text-[10px] text-ust-espresso block truncate">BS Architecture &bull; Beato</span>
+            </div>
+            <span class="apple-badge bg-amber-100 text-ust-deepGold text-[9px] mt-1 self-start">Borrower Persona</span>
+          </button>
+          <button onclick="applyDemoUser('lender')" class="text-left p-2 rounded-xl bg-white border border-stone-200 hover:border-amber-400 spring-press flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-ust-obsidian block truncate">Miguel Santos</span>
+              <span class="text-[10px] text-ust-espresso block truncate">BS Civil Engg &bull; Roque</span>
+            </div>
+            <span class="apple-badge bg-amber-100 text-ust-deepGold text-[9px] mt-1 self-start">Lender Persona</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Credentials Form -->
+      <div class="apple-card flex flex-col gap-2.5 mb-3">
+        <div>
+          <label class="text-micro-label text-ust-espresso block mb-0.5">Student Full Name</label>
+          <input id="login-name" type="text" value="Sophia Reyes" class="w-full bg-stone-100 rounded-xl px-3 py-2 text-xs text-ust-obsidian font-semibold focus:outline-none">
+        </div>
+
+        <div>
+          <label class="text-micro-label text-ust-espresso block mb-0.5">UST Official Email (@ust.edu.ph)</label>
+          <input id="login-email" type="email" value="sophia.reyes.archi@ust.edu.ph" class="w-full bg-stone-100 rounded-xl px-3 py-2 text-xs text-ust-obsidian font-semibold focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-micro-label text-ust-espresso block mb-0.5">Student ID</label>
+            <input id="login-student-id" type="text" value="2023-184920" class="w-full bg-stone-100 rounded-xl px-3 py-2 text-xs text-ust-obsidian font-semibold focus:outline-none">
+          </div>
+          <div>
+            <label class="text-micro-label text-ust-espresso block mb-0.5">College / Hub</label>
+            <select id="login-college-select" class="w-full bg-stone-100 rounded-xl px-2 py-2 text-xs text-ust-obsidian font-semibold focus:outline-none truncate">
+              <option value="College of Architecture • Beato Angelico">Architecture &bull; Beato Angelico</option>
+              <option value="Faculty of Engineering • Roque Ruaño">Engineering &bull; Roque Ruaño</option>
+              <option value="CICS • Frassati Building">CICS &bull; Frassati</option>
+              <option value="Faculty of Arts and Letters • St. Raymund">Arts & Letters &bull; St. Raymund</option>
+              <option value="College of Commerce • Albertus Magnus">Commerce &bull; Albertus Magnus</option>
+              <option value="Tan Yan Kee Student Center">Tan Yan Kee Student Center</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- RegForm Academic Year & SheerID Validator -->
+      <div class="apple-card border-amber-300/80 bg-amber-50/50 flex flex-col gap-2 mb-3">
+        <div class="flex items-center justify-between">
+          <span class="text-micro-label font-bold text-ust-obsidian flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-ust-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>SheerID Academic Year Validation</span>
+          </span>
+          <span class="apple-badge bg-ust-obsidian text-white text-[10px]">AY 2026-2027 Required</span>
+        </div>
+
+        <p class="text-[11px] text-ust-espresso leading-snug">
+          Active University Term: <strong class="text-ust-obsidian">AY 2026-2027</strong>. Cross-checks registrar database to prevent unverified transactions.
+        </p>
+
+        <div>
+          <label class="text-micro-label text-ust-espresso block mb-1">Simulated RegForm Upload Document:</label>
+          <select id="login-regform-select" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 text-xs text-ust-obsidian font-bold focus:outline-none">
+            <option value="AY 2026-2027">RegForm_AY_2026-2027_1stTerm.pdf (Valid Match)</option>
+            <option value="AY 2024-2025">RegForm_AY_2024-2025_Expired.pdf (Mismatch Test)</option>
+          </select>
+        </div>
+
+        <!-- Dynamic SheerID Error Alert Banner -->
+        <div id="login-error-banner" class="hidden-force bg-red-100 border border-red-300 text-red-800 p-2.5 rounded-xl text-xs flex items-start gap-2">
+          <svg class="w-4 h-4 text-red-600 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div class="flex-safe">
+            <strong class="block">Verification Failed:</strong>
+            <span>Uploaded RegForm (AY 2024-2025) does not match active system academic year (AY 2026-2027). Please select a valid document.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Primary Verification & Entry CTA -->
+      <button onclick="submitLoginVerification()" class="w-full py-3 rounded-2xl bg-ust-obsidian hover:bg-black text-white font-bold text-xs flex items-center justify-center gap-2 spring-press shadow-md mb-2">
+        <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        <span>Verify with SheerID & Enter TigRent</span>
+      </button>
+
+      <!-- Quick Demo Bypass Links for Easy Testing -->
+      <div class="flex items-center justify-between text-[11px] text-ust-espresso px-1 mt-1">
+        <button onclick="quickDemoEnter('borrower')" class="text-ust-deepGold font-semibold hover:underline">
+          Quick Enter as Borrower &rarr;
+        </button>
+        <button onclick="quickDemoEnter('lender')" class="text-ust-deepGold font-semibold hover:underline">
+          Quick Enter as Lender &rarr;
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
     <!-- ZONE 1: STICKY TOP GLASS HEADER -->
     <!-- ============================================== -->
     <header class="shrink-0 z-20 px-4 pt-3 pb-2.5 bg-[#FAF8F3]/85 backdrop-blur-xl border-b border-black/[0.06] flex flex-col gap-2">
@@ -305,17 +468,17 @@
         <!-- Active User Badge & SheerID Status -->
         <div class="flex items-center gap-2 flex-safe min-w-0">
           <div id="header-avatar" class="w-8 h-8 rounded-full bg-amber-100 border border-amber-300 flex items-center justify-center font-bold text-xs text-ust-deepGold shrink-0">
-            SR
+            MS
           </div>
           <div class="flex flex-col min-w-0 flex-safe">
             <div class="flex items-center gap-1">
-              <span id="header-user-name" class="text-xs font-bold text-ust-obsidian truncate">Sophia Reyes</span>
+              <span id="header-user-name" class="text-xs font-bold text-ust-obsidian truncate">Maria Carmela Santos</span>
               <span id="header-verification-pill" class="apple-badge bg-emerald-100 text-emerald-800 text-[10px] py-0.5 px-1.5">
                 <svg class="w-2.5 h-2.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
                 <span>Verified Student</span>
               </span>
             </div>
-            <span id="header-user-college" class="text-[10px] text-ust-espresso truncate">College of Architecture &bull; Beato Angelico</span>
+            <span id="header-user-college" class="text-[10px] text-ust-espresso truncate">Faculty of Engineering &bull; Roque Ruaño</span>
           </div>
         </div>
 
@@ -483,9 +646,18 @@
       </section>
 
       <!-- ========================================== -->
-      <!-- VIEW 1: BORROWER MARKETPLACE VIEW -->
+      <!-- VIEW 1: DEDICATED BORROWER PORTAL VIEW -->
       <!-- ========================================== -->
       <div id="borrower-view" class="flex flex-col gap-3.5">
+        <!-- Borrower Header Banner -->
+        <div class="apple-card bg-gradient-to-r from-amber-500/10 to-transparent border-amber-300/40 py-2.5 flex items-center justify-between">
+          <div class="flex-safe">
+            <span class="text-micro-label font-bold text-ust-deepGold block">BORROWER ESSENTIALS PORTAL</span>
+            <span class="text-xs text-ust-obsidian font-semibold">Rent gear from verified Thomasians with escrow protection</span>
+          </div>
+          <span class="apple-badge bg-ust-obsidian text-white text-[10px] shrink-0">Borrower Mode</span>
+        </div>
+
         <!-- Search & Hub Filter Bar -->
         <div class="flex items-center gap-2">
           <div class="flex-1 bg-white/90 backdrop-blur-md rounded-xl px-3 py-2 border border-black/[0.08] flex items-center gap-2 shadow-sm">
@@ -540,9 +712,20 @@
       </div>
 
       <!-- ========================================== -->
-      <!-- VIEW 2: LENDER HUB VIEW -->
+      <!-- VIEW 2: DEDICATED LENDER STUDIO VIEW -->
       <!-- ========================================== -->
       <div id="lender-view" class="hidden-force flex flex-col gap-3.5">
+        <!-- Lender Studio Header Banner -->
+        <div class="apple-card bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-transparent border-amber-400/40 py-2.5 flex items-center justify-between">
+          <div class="flex-safe">
+            <span class="text-micro-label font-bold text-ust-deepGold block">LENDER REVENUE & ASSETS STUDIO</span>
+            <span class="text-xs text-ust-obsidian font-semibold">Monetize idle academic gear & track earnings</span>
+          </div>
+          <button onclick="openAddListingModal()" class="apple-badge bg-ust-obsidian text-white text-[10px] font-bold spring-press shrink-0">
+            + Add Listing
+          </button>
+        </div>
+
         <!-- Revenue & Ledger Bento Cards -->
         <div class="grid grid-cols-2 gap-2.5">
           <div class="apple-card flex flex-col justify-between">
@@ -651,7 +834,7 @@
     </main>
 
     <!-- ============================================== -->
-    <!-- ZONE 3: DOCKED BOTTOM GLASS TAB BAR -->
+    <!-- ZONE 3: DOCKED BOTTOM GLASS TAB BAR (ROLE-AWARE) -->
     <!-- ============================================== -->
     <nav class="shrink-0 h-[74px] z-20 bg-[#FAF8F3]/90 backdrop-blur-2xl border-t border-black/[0.08] flex items-center justify-around px-2 pb-2">
       <button onclick="switchRole('borrower')" class="flex flex-col items-center gap-1 text-ust-obsidian spring-press">
@@ -679,139 +862,6 @@
         <span class="text-[10px] font-semibold">Account</span>
       </button>
     </nav>
-
-    <!-- ============================================== -->
-    <!-- FULL-SCREEN DUAL-END LOGIN & SHEERID GATEWAY -->
-    <!-- ============================================== -->
-    <div id="auth-gateway-view" class="hidden-force absolute inset-0 z-[60] bg-[#FAF8F3] flex flex-col p-5 overflow-y-auto no-scrollbar">
-      <!-- Top Branding & Mascot Badge -->
-      <div class="flex items-center justify-between pt-4 pb-2">
-        <div class="flex items-center gap-2">
-          <div class="w-9 h-9 rounded-2xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center">
-            <span class="font-extrabold text-sm text-ust-deepGold">TR</span>
-          </div>
-          <div>
-            <h2 class="text-card-title font-extrabold text-ust-obsidian tracking-tight">TigRent UST</h2>
-            <span class="text-[10px] text-ust-espresso">Peer-to-Peer Academic Essentials</span>
-          </div>
-        </div>
-
-        <button onclick="closeAuthGateway()" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso spring-press">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-
-      <!-- Welcome Banner -->
-      <div class="my-3">
-        <h1 class="text-screen-title font-extrabold text-ust-obsidian">Dual-End Gateway</h1>
-        <p class="text-desc-body text-ust-espresso">Sign in with your UST SheerID credentials or choose a test profile.</p>
-      </div>
-
-      <!-- Two-End Role Selector Tabs on Login -->
-      <div class="bg-black/5 p-1 rounded-2xl flex items-center gap-1 mb-4">
-        <button id="login-tab-borrower" onclick="selectLoginRole('borrower')" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all bg-white text-ust-obsidian shadow-sm flex items-center justify-center gap-1.5 spring-press">
-          <svg class="w-3.5 h-3.5 text-ust-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-          <span>End 1: Borrower Portal</span>
-        </button>
-        <button id="login-tab-lender" onclick="selectLoginRole('lender')" class="flex-1 py-2 rounded-xl text-xs font-bold transition-all text-ust-espresso flex items-center justify-center gap-1.5 spring-press">
-          <svg class="w-3.5 h-3.5 text-ust-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-          <span>End 2: Lender Studio</span>
-        </button>
-      </div>
-
-      <!-- Demo One-Click Fill Profiles -->
-      <div class="mb-4">
-        <span class="text-micro-label text-ust-espresso font-semibold block mb-1.5">Quick Demo Profiles:</span>
-        <div class="flex flex-col gap-2">
-          <button onclick="applyDemoUser('borrower')" class="w-full text-left p-2.5 rounded-xl bg-white border border-stone-200 hover:border-amber-400 flex items-center justify-between spring-press">
-            <div>
-              <span class="text-xs font-bold text-ust-obsidian block">Sophia Reyes (Borrower Demo)</span>
-              <span class="text-[10px] text-ust-espresso">BS Architecture &bull; Beato Angelico &bull; AY 2026-2027</span>
-            </div>
-            <span class="apple-badge bg-amber-100 text-ust-deepGold text-[10px]">Select</span>
-          </button>
-          <button onclick="applyDemoUser('lender')" class="w-full text-left p-2.5 rounded-xl bg-white border border-stone-200 hover:border-amber-400 flex items-center justify-between spring-press">
-            <div>
-              <span class="text-xs font-bold text-ust-obsidian block">Miguel Santos (Lender Demo)</span>
-              <span class="text-[10px] text-ust-espresso">BS Civil Engineering &bull; Roque Ruaño &bull; AY 2026-2027</span>
-            </div>
-            <span class="apple-badge bg-amber-100 text-ust-deepGold text-[10px]">Select</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Credentials Form -->
-      <div class="apple-card flex flex-col gap-3 mb-4">
-        <div>
-          <label class="text-micro-label text-ust-espresso block mb-1">Full Student Name</label>
-          <input id="login-name" type="text" value="Sophia Reyes" class="w-full bg-stone-100 rounded-xl px-3 py-2 text-xs text-ust-obsidian font-semibold focus:outline-none">
-        </div>
-
-        <div>
-          <label class="text-micro-label text-ust-espresso block mb-1">UST Official Email (@ust.edu.ph)</label>
-          <input id="login-email" type="email" value="sophia.reyes.archi@ust.edu.ph" class="w-full bg-stone-100 rounded-xl px-3 py-2 text-xs text-ust-obsidian font-semibold focus:outline-none">
-        </div>
-
-        <div>
-          <label class="text-micro-label text-ust-espresso block mb-1">Student ID Number</label>
-          <input id="login-student-id" type="text" value="2023-184920" class="w-full bg-stone-100 rounded-xl px-3 py-2 text-xs text-ust-obsidian font-semibold focus:outline-none">
-        </div>
-
-        <div>
-          <label class="text-micro-label text-ust-espresso block mb-1">College & Campus Building Hub</label>
-          <select id="login-college-select" class="w-full bg-stone-100 rounded-xl px-3 py-2 text-xs text-ust-obsidian font-semibold focus:outline-none">
-            <option value="College of Architecture • Beato Angelico">College of Architecture &bull; Beato Angelico</option>
-            <option value="Faculty of Engineering • Roque Ruaño">Faculty of Engineering &bull; Roque Ruaño</option>
-            <option value="CICS • Frassati Building">CICS &bull; Frassati Building</option>
-            <option value="Faculty of Arts and Letters • St. Raymund">Faculty of Arts and Letters &bull; St. Raymund</option>
-            <option value="College of Commerce • Albertus Magnus">College of Commerce &bull; Albertus Magnus</option>
-            <option value="Tan Yan Kee Student Center">Tan Yan Kee Student Center</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- RegForm Academic Year & SheerID Validator -->
-      <div class="apple-card border-amber-300/80 bg-amber-50/50 flex flex-col gap-2.5 mb-4">
-        <div class="flex items-center justify-between">
-          <span class="text-micro-label font-bold text-ust-obsidian flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5 text-ust-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>SheerID Academic Year Match</span>
-          </span>
-          <span class="apple-badge bg-ust-obsidian text-white text-[10px]">AY 2026-2027 Active</span>
-        </div>
-
-        <p class="text-[11px] text-ust-espresso">
-          System Current Academic Year: <strong class="text-ust-obsidian">AY 2026-2027</strong>. Only officially enrolled Thomasians with an active RegForm are verified to transact.
-        </p>
-
-        <div>
-          <label class="text-micro-label text-ust-espresso block mb-1">Simulated RegForm Document:</label>
-          <select id="login-regform-select" class="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 text-xs text-ust-obsidian font-bold focus:outline-none">
-            <option value="AY 2026-2027">RegForm_AY_2026-2027_1stTerm.pdf (Valid Match)</option>
-            <option value="AY 2024-2025">RegForm_AY_2024-2025_Expired.pdf (Mismatch Test)</option>
-          </select>
-        </div>
-
-        <!-- Dynamic SheerID Error Alert Banner -->
-        <div id="login-error-banner" class="hidden-force bg-red-100 border border-red-300 text-red-800 p-2.5 rounded-xl text-xs flex items-start gap-2">
-          <svg class="w-4 h-4 text-red-600 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <div class="flex-safe">
-            <strong class="block">Verification Failed:</strong>
-            <span>Uploaded RegForm (AY 2024-2025) does not match active system academic year (AY 2026-2027). Please select a valid document.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Submit Verification & Enter Button -->
-      <button onclick="submitLoginVerification()" class="w-full py-3 rounded-2xl bg-ust-obsidian hover:bg-black text-white font-bold text-xs flex items-center justify-center gap-2 spring-press shadow-md">
-        <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-        <span>Verify with SheerID & Enter TigRent</span>
-      </button>
-
-      <button onclick="closeAuthGateway()" class="w-full py-2 text-center text-xs text-ust-espresso font-semibold mt-2 hover:underline">
-        Continue without switching
-      </button>
-    </div>
 
     <!-- ============================================== -->
     <!-- IN-FRAME MODAL 1: SHEERID VERIFICATION -->
@@ -909,7 +959,7 @@
 
         <!-- Checkout Action Button -->
         <button id="modal-book-confirm-btn" onclick="confirmBookingPayment()" disabled class="w-full bg-ust-obsidian disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 spring-press">
-          <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="10" y1="10" x2="23" y2="10"/></svg>
           <span id="modal-book-pay-label">Pay via PayMongo (₱525)</span>
         </button>
       </div>
@@ -1229,6 +1279,7 @@
       systemAY: SYSTEM_ACADEMIC_YEAR,
       activeRole: 'borrower', // 'borrower' or 'lender'
       loginRole: 'borrower',
+      isLoggedIn: false,
       user: {
         id: 'user-001',
         name: 'Maria Carmela Santos',
@@ -1470,6 +1521,11 @@
       }
     }
 
+    function quickDemoEnter(role) {
+      applyDemoUser(role);
+      submitLoginVerification();
+    }
+
     function submitLoginVerification() {
       const regSelect = document.getElementById('login-regform-select');
       const errBanner = document.getElementById('login-error-banner');
@@ -1500,15 +1556,16 @@
       state.user.college = colSelect ? colSelect.value : 'Faculty of Engineering • Roque Ruaño';
       state.user.isVerified = true;
       state.user.regFormAY = SYSTEM_ACADEMIC_YEAR;
+      state.isLoggedIn = true;
 
       closeAuthGateway();
       switchRole(state.loginRole);
       renderUserProfile();
-      showToast(`Welcome ${fullName}! SheerID Verified for AY 2026-2027.`);
+      showToast(`Welcome ${fullName}! Logged into ${state.loginRole === 'borrower' ? 'Borrower Portal' : 'Lender Studio'}.`);
     }
 
     // ==========================================
-    // ROLE SWITCHING: BORROWER <-> LENDER
+    // ROLE SWITCHING: BORROWER <-> LENDER (DIFFERENT VIEWS)
     // ==========================================
     function switchRole(role) {
       state.activeRole = role;
@@ -1518,13 +1575,13 @@
       const lView = document.getElementById('lender-view');
 
       if (role === 'borrower') {
-        bBtn.className = "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm bg-white text-ust-obsidian flex items-center justify-center gap-1.5 spring-press";
-        lBtn.className = "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-ust-espresso hover:text-ust-obsidian flex items-center justify-center gap-1.5 spring-press";
+        if (bBtn) bBtn.className = "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm bg-white text-ust-obsidian flex items-center justify-center gap-1.5 spring-press";
+        if (lBtn) lBtn.className = "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-ust-espresso hover:text-ust-obsidian flex items-center justify-center gap-1.5 spring-press";
         if (bView) bView.classList.remove('hidden-force');
         if (lView) lView.classList.add('hidden-force');
       } else {
-        lBtn.className = "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm bg-white text-ust-obsidian flex items-center justify-center gap-1.5 spring-press";
-        bBtn.className = "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-ust-espresso hover:text-ust-obsidian flex items-center justify-center gap-1.5 spring-press";
+        if (lBtn) lBtn.className = "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm bg-white text-ust-obsidian flex items-center justify-center gap-1.5 spring-press";
+        if (bBtn) bBtn.className = "flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-ust-espresso hover:text-ust-obsidian flex items-center justify-center gap-1.5 spring-press";
         if (lView) lView.classList.remove('hidden-force');
         if (bView) bView.classList.add('hidden-force');
         renderLenderHub();
@@ -2292,6 +2349,7 @@
     window.closeAuthGateway = closeAuthGateway;
     window.selectLoginRole = selectLoginRole;
     window.applyDemoUser = applyDemoUser;
+    window.quickDemoEnter = quickDemoEnter;
     window.submitLoginVerification = submitLoginVerification;
     window.cycleTomasitoTip = cycleTomasitoTip;
     window.showToast = showToast;
