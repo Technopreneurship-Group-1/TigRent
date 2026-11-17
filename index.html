@@ -1,0 +1,2907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TigRent &bull; Digital Peer-to-Peer Rental System for UST Essentials</title>
+  
+  <!-- Inter & SF Pro display font fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ust: {
+              ivory: '#FAF8F3',
+              parchment: '#F2ECE1',
+              obsidian: '#161412',
+              espresso: '#5C5549',
+              gold: '#E5A000',
+              amber: '#F5B82E',
+              deepGold: '#B87D00',
+              emerald: '#157F3B',
+              semanticAmber: '#D97706',
+              crimson: '#C92A2A',
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'SF Pro Display', 'Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            'apple': '0 8px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)',
+            'apple-hover': '0 14px 40px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06)',
+            'apple-dock': '0 -4px 24px rgba(22, 20, 18, 0.06), 0 -1px 2px rgba(22, 20, 18, 0.04)',
+            'gold-glow': '0 0 25px rgba(245, 184, 46, 0.45)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Ambient Mesh Gradient Drift */
+    @keyframes ambientDrift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .ambient-mesh {
+      background: linear-gradient(135deg, #FAF8F3 0%, #F5EFE0 25%, #FFFDF7 50%, #F1ECE0 75%, #FAF8F3 100%);
+      background-size: 300% 300%;
+      animation: ambientDrift 18s ease-in-out infinite;
+    }
+
+    /* Apple Cupertino Glassmorphism */
+    .apple-glass {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(22px) saturate(185%);
+      -webkit-backdrop-filter: blur(22px) saturate(185%);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+    }
+
+    .apple-glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(230, 224, 212, 0.65);
+    }
+
+    .apple-glass-gold {
+      background: rgba(245, 184, 46, 0.12);
+      backdrop-filter: blur(22px) saturate(185%);
+      -webkit-backdrop-filter: blur(22px) saturate(185%);
+      border: 1px solid rgba(229, 160, 0, 0.35);
+    }
+
+    .apple-glass-dock {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border-top: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .apple-glass-dark {
+      background: rgba(22, 20, 18, 0.90);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Tactile Spring Transitions */
+    .spring-trans {
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .spring-hover:hover {
+      transform: translateY(-2px);
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .spring-press:active {
+      transform: scale(0.97);
+      transition: all 0.15s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Golden Breathing Glow under Tomasito */
+    @keyframes glowBreath {
+      0%, 100% {
+        opacity: 0.55;
+        transform: translate(-50%, 0) scale(1);
+      }
+      50% {
+        opacity: 0.95;
+        transform: translate(-50%, 0) scale(1.16);
+      }
+    }
+
+    .tomasito-glow {
+      animation: glowBreath 3.2s ease-in-out infinite;
+    }
+
+    /* Tomasito Micro-interactions */
+    .tomasito-container {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tomasito-container:hover .mascot-cub {
+      transform: scale(1.05) rotate(-2deg);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tomasito-container:hover .mascot-ear-left {
+      transform: rotate(-9deg);
+      transform-origin: 30px 32px;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tomasito-container:hover .mascot-ear-right {
+      transform: rotate(9deg);
+      transform-origin: 90px 32px;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tomasito-container:hover .mascot-paw-left {
+      transform: translateY(-3px);
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tomasito-container:hover .tomasito-glow {
+      filter: blur(14px);
+      opacity: 1;
+    }
+
+    /* Speech Bubble Bounce */
+    @keyframes speechBounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-3px);
+      }
+    }
+
+    .speech-bubble-anim {
+      animation: speechBounce 4s ease-in-out infinite;
+    }
+
+    /* Custom Cupertino Scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(92, 85, 73, 0.18);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(92, 85, 73, 0.32);
+    }
+
+    /* Bottom Sheet Modal Slide-up */
+    @keyframes slideUpModal {
+      from {
+        transform: translateY(100%);
+        opacity: 0.8;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-sheet-enter {
+      animation: slideUpModal 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Hide element utility */
+    .hidden-force {
+      display: none !important;
+    }
+  </style>
+</head>
+<body class="ambient-mesh text-ust-obsidian antialiased min-h-screen flex flex-col items-center justify-start p-0 sm:py-6 selection:bg-ust-amber selection:text-ust-obsidian">
+
+  <!-- ========================================== -->
+  <!-- EVALUATOR QUICK-TESTING DOCK (TOP BAR) -->
+  <!-- ========================================== -->
+  <header class="w-full max-w-4xl px-3 py-2 mb-2 z-50">
+    <div class="apple-glass rounded-2xl px-4 py-2.5 shadow-apple border border-white/80 flex flex-wrap items-center justify-between gap-2.5">
+      <div class="flex items-center space-x-2">
+        <div class="w-7 h-7 rounded-xl bg-gradient-to-tr from-ust-deepGold to-ust-amber flex items-center justify-center shadow-sm">
+          <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <span class="text-xs font-bold tracking-tight text-ust-obsidian flex items-center gap-1.5">
+            TigRent Prototype
+            <span class="px-1.5 py-0.5 text-[10px] bg-ust-amber/25 text-ust-deepGold font-semibold rounded-md border border-ust-gold/40">UST Community</span>
+          </span>
+          <span class="text-[10px] text-ust-espresso block">Evaluator Command Panel &bull; 100% State Reactive</span>
+        </div>
+      </div>
+
+      <!-- Quick Evaluator Toggles -->
+      <div class="flex items-center flex-wrap gap-1.5 text-xs">
+        <!-- Verification Toggle -->
+        <button id="eval-toggle-verify-btn" onclick="toggleEvaluatorVerification()" class="px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-emerald-50 text-ust-emerald border border-emerald-200 hover:bg-emerald-100">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+          <span id="eval-verify-label">AY 2026-27 (Valid)</span>
+        </button>
+
+        <!-- Trust Rating Toggle -->
+        <button id="eval-toggle-rating-btn" onclick="toggleEvaluatorRating()" class="px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-amber-50 text-ust-deepGold border border-amber-200 hover:bg-amber-100">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <span id="eval-rating-label">Trust 4.9 (Good)</span>
+        </button>
+
+        <!-- Premium Toggle -->
+        <button id="eval-toggle-premium-btn" onclick="toggleEvaluatorPremium()" class="px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-amber-100/60 text-ust-obsidian border border-ust-gold/50 hover:bg-amber-100">
+          <svg class="w-3.5 h-3.5 text-ust-deepGold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5z"/>
+          </svg>
+          <span id="eval-premium-label">Premium: ON</span>
+        </button>
+
+        <!-- Responsive Frame Mode Toggle -->
+        <button onclick="toggleDeviceFrame()" class="px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-white/70 text-ust-espresso border border-gray-200 hover:bg-white">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="3" ry="3"/>
+            <line x1="12" y1="18" x2="12.01" y2="18"/>
+          </svg>
+          <span id="eval-frame-label">iOS Frame</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button onclick="resetPrototypeData()" class="px-2 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-stone-100 text-stone-600 hover:bg-stone-200" title="Reset all state to initial demo data">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- MAIN MOBILE APPLICATION VIEWPORT -->
+  <!-- ========================================== -->
+  <div id="app-viewport-wrapper" class="w-full flex justify-center transition-all duration-300">
+    <!-- Native iOS 390x844 Frame Container -->
+    <div id="device-container" class="w-full max-w-[400px] h-[874px] bg-[#FAF8F3] sm:rounded-[50px] shadow-2xl relative flex flex-col overflow-hidden border-0 sm:border-[9px] sm:border-[#1E1B18] sm:ring-1 sm:ring-black/10">
+
+      <!-- iOS Status Bar & Dynamic Island -->
+      <div class="w-full pt-3 pb-1 px-6 flex items-center justify-between text-xs font-semibold text-ust-obsidian z-40 select-none bg-transparent">
+        <span class="tracking-tight text-[13px] font-medium" id="status-clock">9:41</span>
+        
+        <!-- Apple Dynamic Island Pill -->
+        <div class="h-[24px] w-[114px] bg-black rounded-full flex items-center justify-between px-2.5 py-0.5 shadow-inner cursor-pointer" onclick="cycleTomasitoSpeech()">
+          <div class="w-2.5 h-2.5 rounded-full bg-amber-400/90 flex items-center justify-center">
+            <div class="w-1.5 h-1.5 rounded-full bg-amber-200 animate-ping"></div>
+          </div>
+          <span class="text-[9.5px] font-medium text-white/90 tracking-wider">TigRent UST</span>
+          <div class="w-2 h-2 rounded-full bg-emerald-500/80"></div>
+        </div>
+
+        <!-- iOS Signal, Wi-Fi, Battery SVGs -->
+        <div class="flex items-center space-x-1.5 text-ust-obsidian">
+          <!-- Signal SVG -->
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="2" y="16" width="3" height="6" rx="0.5"/>
+            <rect x="7" y="12" width="3" height="10" rx="0.5"/>
+            <rect x="12" y="8" width="3" height="14" rx="0.5"/>
+            <rect x="17" y="4" width="3" height="18" rx="0.5"/>
+          </svg>
+          <!-- Wi-Fi SVG -->
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12.55a11 1 0 0 1 14.08 0"/>
+            <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+            <line x1="12" y1="20" x2="12.01" y2="20"/>
+          </svg>
+          <!-- Battery SVG -->
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="16" height="10" rx="2" ry="2"/>
+            <line x1="22" y1="11" x2="22" y2="13"/>
+            <rect x="4" y="9" width="10" height="6" rx="1" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- App Header Bar -->
+      <header class="px-4 pt-1.5 pb-2.5 z-30 flex flex-col gap-2 border-b border-black/[0.04]">
+        <div class="flex items-center justify-between">
+          <!-- Logo & Brand Badge -->
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-ust-amber to-ust-deepGold flex items-center justify-center shadow-sm text-white">
+              <svg class="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L4 7v10l8 5 8-5V7l-8-5z"/>
+                <path d="M12 22V12"/>
+                <path d="M20 7l-8 5-8-5"/>
+              </svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-base font-extrabold tracking-tight text-ust-obsidian leading-none">TigRent</span>
+                <span id="header-pro-badge" class="px-1.5 py-0.2 text-[9px] bg-ust-amber text-ust-obsidian font-bold rounded tracking-wider uppercase border border-ust-gold/40">PRO</span>
+              </div>
+              <span class="text-[10px] text-ust-espresso tracking-tight">University of Santo Tomas</span>
+            </div>
+          </div>
+
+          <!-- Student Verification Status Pill (Clickable) -->
+          <button onclick="openVerificationModal()" id="header-verification-pill" class="apple-glass px-2.5 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 shadow-sm border transition-all spring-press" title="Click to inspect SheerID & RegForm verification">
+            <div id="header-verify-dot" class="w-2 h-2 rounded-full bg-ust-emerald"></div>
+            <span id="header-verify-text" class="text-ust-emerald font-medium">AY 2026-27</span>
+            <svg class="w-3 h-3 text-ust-espresso/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Persistent iOS Segmented Role Switcher: Borrower Mode <-> Lender Hub -->
+        <div class="w-full bg-[#EAE4D7]/80 p-0.5 rounded-xl flex items-center relative select-none">
+          <button id="role-borrower-btn" onclick="switchRole('borrower')" class="flex-1 py-1.5 rounded-[10px] text-xs font-semibold text-center transition-all spring-trans z-10 flex items-center justify-center gap-1.5 text-ust-obsidian bg-white shadow-sm">
+            <svg class="w-3.5 h-3.5 text-ust-deepGold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"/>
+              <circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+            <span>Borrower Mode</span>
+          </button>
+
+          <button id="role-lender-btn" onclick="switchRole('lender')" class="flex-1 py-1.5 rounded-[10px] text-xs font-medium text-center transition-all spring-trans z-10 flex items-center justify-center gap-1.5 text-ust-espresso hover:text-ust-obsidian">
+            <svg class="w-3.5 h-3.5 text-ust-espresso" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+            <span>Lender Hub</span>
+            <span id="lender-requests-badge" class="w-4 h-4 rounded-full bg-ust-semanticAmber text-white text-[9px] font-bold flex items-center justify-center shadow-xs">1</span>
+          </button>
+        </div>
+
+        <!-- Warning / Suspension Banner (Reactive) -->
+        <div id="suspension-banner" class="hidden-force bg-red-50 border border-red-200 rounded-xl p-2.5 flex items-start gap-2 text-xs">
+          <div class="w-5 h-5 rounded-full bg-red-100 flex items-center justify-center shrink-0 mt-0.5 text-ust-crimson">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <span class="font-bold text-ust-crimson block">Account Temporarily Suspended</span>
+            <span class="text-[11px] text-red-700 leading-tight block" id="suspension-desc">Trust rating dropped below 3.0 threshold. Borrowing and lending privileges are locked.</span>
+            <button onclick="openAppealModal()" class="mt-1 text-[11px] font-semibold text-ust-crimson underline hover:text-red-800">
+              Submit Appeal or Reset Trust Demo &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Expired RegForm Verification Warning (Reactive) -->
+        <div id="expired-regform-banner" class="hidden-force bg-amber-50 border border-amber-200 rounded-xl p-2.5 flex items-start gap-2 text-xs">
+          <div class="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center shrink-0 mt-0.5 text-ust-semanticAmber">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <span class="font-bold text-ust-semanticAmber block">RegForm Validation Required</span>
+            <span class="text-[11px] text-amber-800 leading-tight block">Submitted RegForm AY 2024-2025 does not match active term AY 2026-2027. Transactions blocked.</span>
+            <button onclick="openVerificationModal()" class="mt-1 text-[11px] font-semibold text-ust-semanticAmber underline">
+              Upload AY 2026-2027 RegForm &rarr;
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Scrollable Main Content Area -->
+      <main id="main-content-scroll" class="flex-1 overflow-y-auto px-4 py-3 space-y-4 pb-24">
+
+        <!-- ============================================== -->
+        <!-- BORROWER MODE VIEW -->
+        <!-- ============================================== -->
+        <section id="borrower-view" class="space-y-4">
+          
+          <!-- ASYMMETRIC BENTO DISCOVERY HEADER -->
+          <div class="grid grid-cols-12 gap-2.5">
+            
+            <!-- Bento Card 1: Interactive Tomasito Mascot & Speech Bubble (Span 8) -->
+            <div class="col-span-12 sm:col-span-8 apple-glass-card rounded-2xl p-3.5 relative overflow-hidden shadow-apple tomasito-container border border-white/70" onclick="cycleTomasitoSpeech()">
+              
+              <!-- Subtle gold accent glow -->
+              <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-ust-amber/15 rounded-full blur-2xl pointer-events-none"></div>
+
+              <div class="flex items-start gap-3 relative z-10">
+                <!-- Tomasito Custom SVG Avatar with Golden Breathing Under-Glow -->
+                <div class="relative w-20 h-20 shrink-0">
+                  <!-- Golden Breathing Under-Glow -->
+                  <div class="tomasito-glow absolute bottom-0 left-1/2 w-16 h-7 bg-amber-400/60 rounded-full blur-md"></div>
+                  
+                  <!-- Bespoke Multi-Layered Baby Tiger Cub Mascot SVG -->
+                  <div class="mascot-cub w-full h-full spring-trans relative z-10">
+                    <svg viewBox="0 0 120 120" class="w-full h-full drop-shadow-sm" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <!-- Ears -->
+                      <g class="mascot-ear-left spring-trans">
+                        <circle cx="28" cy="30" r="16" fill="#F5B82E" stroke="#3D2406" stroke-width="2.2" />
+                        <circle cx="28" cy="30" r="9" fill="#FFAAA6" />
+                      </g>
+                      <g class="mascot-ear-right spring-trans">
+                        <circle cx="92" cy="30" r="16" fill="#F5B82E" stroke="#3D2406" stroke-width="2.2" />
+                        <circle cx="92" cy="30" r="9" fill="#FFAAA6" />
+                      </g>
+                      
+                      <!-- Head -->
+                      <ellipse cx="60" cy="62" rx="43" ry="37" fill="#F5B82E" stroke="#3D2406" stroke-width="2.4" />
+                      
+                      <!-- Fluffy Cream Cheeks -->
+                      <ellipse cx="38" cy="70" rx="18" ry="14" fill="#FFF9ED" />
+                      <ellipse cx="82" cy="70" rx="18" ry="14" fill="#FFF9ED" />
+                      <ellipse cx="60" cy="74" rx="20" ry="15" fill="#FFF9ED" />
+                      
+                      <!-- Forehead Tiger Stripes -->
+                      <path d="M60 30 V42" stroke="#3D2406" stroke-width="3" stroke-linecap="round" />
+                      <path d="M50 34 L56 40" stroke="#3D2406" stroke-width="2.4" stroke-linecap="round" />
+                      <path d="M70 34 L64 40" stroke="#3D2406" stroke-width="2.4" stroke-linecap="round" />
+                      
+                      <!-- Side Cheek Stripes -->
+                      <path d="M22 62 L31 64" stroke="#3D2406" stroke-width="2.2" stroke-linecap="round" />
+                      <path d="M24 70 L33 70" stroke="#3D2406" stroke-width="2.2" stroke-linecap="round" />
+                      <path d="M98 62 L89 64" stroke="#3D2406" stroke-width="2.2" stroke-linecap="round" />
+                      <path d="M96 70 L87 70" stroke="#3D2406" stroke-width="2.2" stroke-linecap="round" />
+                      
+                      <!-- Rosy Cheeks -->
+                      <circle cx="36" cy="69" r="6.5" fill="#FFAAA6" fill-opacity="0.85" />
+                      <circle cx="84" cy="69" r="6.5" fill="#FFAAA6" fill-opacity="0.85" />
+                      
+                      <!-- Squinting Happy Curved Eyes -->
+                      <path d="M42 56 Q48 50 54 56" stroke="#2B1810" stroke-width="2.8" stroke-linecap="round" fill="none" />
+                      <path d="M66 56 Q72 50 78 56" stroke="#2B1810" stroke-width="2.8" stroke-linecap="round" fill="none" />
+                      
+                      <!-- Pink Triangle Nose -->
+                      <polygon points="60,65 55,59 65,59" fill="#F472B6" stroke="#3D2406" stroke-width="1.5" stroke-linejoin="round" />
+                      
+                      <!-- Cute Smiling Mouth -->
+                      <path d="M60 65 V69" stroke="#3D2406" stroke-width="2" stroke-linecap="round" />
+                      <path d="M54 70 Q60 74 66 70" stroke="#3D2406" stroke-width="2" stroke-linecap="round" fill="none" />
+                      
+                      <!-- Whiskers -->
+                      <path d="M20 74 L31 75" stroke="#3D2406" stroke-width="1.4" stroke-linecap="round" />
+                      <path d="M100 74 L89 75" stroke="#3D2406" stroke-width="1.4" stroke-linecap="round" />
+                      
+                      <!-- Cute Paws Resting Forward -->
+                      <g class="mascot-paw-left spring-trans">
+                        <ellipse cx="44" cy="95" rx="9" ry="6.5" fill="#FFF9ED" stroke="#3D2406" stroke-width="2" />
+                        <circle cx="44" cy="95" r="2.8" fill="#FFAAA6" />
+                      </g>
+                      <g class="mascot-paw-right spring-trans">
+                        <ellipse cx="76" cy="95" rx="9" ry="6.5" fill="#FFF9ED" stroke="#3D2406" stroke-width="2" />
+                        <circle cx="76" cy="95" r="2.8" fill="#FFAAA6" />
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Tomasito Context-Aware Speech Bubble -->
+                <div class="flex-1">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-xs font-bold text-ust-obsidian flex items-center gap-1">
+                      Tomasito
+                      <span class="text-[9px] font-normal text-ust-espresso/80 bg-ust-amber/20 px-1.5 py-0.2 rounded-full border border-ust-amber/30">Campus Tiger</span>
+                    </span>
+                    <span class="text-[9px] text-ust-deepGold font-semibold animate-pulse">Tap to refresh</span>
+                  </div>
+
+                  <!-- Speech Bubble Box -->
+                  <div class="speech-bubble-anim bg-white/95 rounded-xl p-2.5 text-[11.5px] text-ust-obsidian leading-relaxed border border-ust-gold/25 shadow-xs relative">
+                    <p id="tomasito-quote-text" class="font-normal italic">
+                      "Roque Rua&ntilde;o midterms alert: Scientific calculators & drafting tubes are up 48% today!"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bento Card 2: Campus Live Rental Tracker (Span 4) -->
+            <div class="col-span-12 sm:col-span-4 apple-glass-card rounded-2xl p-3 flex flex-col justify-between shadow-apple border border-white/70">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-[10px] font-bold text-ust-espresso tracking-wider uppercase">Active Tracker</span>
+                  <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                </div>
+                <div class="text-xl font-extrabold text-ust-obsidian" id="bento-active-count">1 Item</div>
+                <span class="text-[10.5px] text-ust-espresso block leading-tight mt-0.5" id="bento-active-status">Canon 200D II &bull; Due in 2d</span>
+              </div>
+
+              <button onclick="scrollToRentals()" class="mt-2 text-[10.5px] font-semibold text-ust-deepGold flex items-center gap-1 hover:underline">
+                <span>View My Rentals</span>
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- SEARCH & CAMPUS HUB FILTER -->
+          <div class="space-y-2.5">
+            <!-- Search Bar -->
+            <div class="relative">
+              <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-ust-espresso/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <input type="text" id="marketplace-search-input" oninput="handleMarketplaceSearch(this.value)" placeholder="Search Casio fx-991, Canon DSLR, Drafting pens..." class="w-full bg-white/90 border border-black/[0.08] rounded-xl pl-9 pr-8 py-2.5 text-xs text-ust-obsidian placeholder:text-ust-espresso/50 focus:outline-none focus:ring-2 focus:ring-ust-amber/50 shadow-xs">
+              <button id="search-clear-btn" onclick="clearSearch()" class="hidden-force absolute right-3 top-1/2 -translate-y-1/2 text-ust-espresso/50 hover:text-ust-obsidian">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Campus Hub Filter Dropdown -->
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-1.5 text-xs font-semibold text-ust-espresso shrink-0">
+                <svg class="w-3.5 h-3.5 text-ust-deepGold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>Campus Hub:</span>
+              </div>
+              <select id="hub-filter-select" onchange="filterByHub(this.value)" class="flex-1 bg-white/80 border border-black/[0.08] rounded-xl px-2.5 py-1.5 text-xs text-ust-obsidian font-medium focus:outline-none focus:ring-1 focus:ring-ust-amber">
+                <option value="all">All UST Campus Lobbies</option>
+                <option value="Roque Ruaño Lobby">Roque Ruaño (Engineering)</option>
+                <option value="Beato Angelico Lobby">Beato Angelico (Architecture)</option>
+                <option value="Frassati Lobby">Frassati Building (CICS / SHS)</option>
+                <option value="Main Building">Main Building (Pharmacy / Science)</option>
+                <option value="Tan Yan Kee Student Center">Tan Yan Kee (Student Orgs)</option>
+              </select>
+            </div>
+
+            <!-- Categories Horizontal Scroll Pills -->
+            <div class="flex items-center space-x-1.5 overflow-x-auto py-1 scrollbar-none select-none" id="category-pills-container">
+              <!-- Dynamically populated category pills -->
+            </div>
+          </div>
+
+          <!-- ACTIVE RENTALS EXPANDABLE DRAWER (BORROWER) -->
+          <div id="active-rentals-section" class="apple-glass-card rounded-2xl p-3.5 shadow-apple border border-white/80 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-ust-amber/25 flex items-center justify-center text-ust-deepGold">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </div>
+                <h2 class="text-xs font-bold text-ust-obsidian uppercase tracking-wider">My Active Rentals & Returns</h2>
+              </div>
+              <span id="active-rentals-badge-count" class="text-[10px] bg-ust-amber/20 text-ust-deepGold font-bold px-2 py-0.5 rounded-full border border-ust-amber/30">1 Active</span>
+            </div>
+
+            <!-- List of Borrower Active Rentals -->
+            <div id="borrower-rentals-list" class="space-y-2.5">
+              <!-- Dynamically rendered active rental cards -->
+            </div>
+          </div>
+
+          <!-- EQUIPMENT MARKETPLACE LISTINGS -->
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between px-1">
+              <h2 class="text-xs font-bold text-ust-espresso uppercase tracking-wider">UST Equipment Catalog</h2>
+              <span id="marketplace-count-label" class="text-[11px] text-ust-espresso">Showing 8 items</span>
+            </div>
+
+            <!-- Grid of Equipment Items -->
+            <div id="listings-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Dynamically rendered equipment cards -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- LENDER HUB VIEW -->
+        <!-- ============================================== -->
+        <section id="lender-view" class="space-y-4 hidden-force">
+          
+          <!-- REVENUE & COMMISSION LEDGER -->
+          <div class="apple-glass-card rounded-2xl p-4 shadow-apple border border-white/80 space-y-3 relative overflow-hidden">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-[10.5px] font-bold text-ust-espresso uppercase tracking-wider block">Lender Studio Revenue</span>
+                <span class="text-2xl font-extrabold text-ust-obsidian tracking-tight" id="lender-net-revenue">₱4,338.00</span>
+                <span class="text-[10.5px] text-ust-espresso block mt-0.5">Net Payout to GCash / Maya</span>
+              </div>
+              
+              <!-- Payout Action Button -->
+              <button onclick="simulateLenderPayout()" class="apple-glass-gold px-3 py-1.5 rounded-xl text-xs font-bold text-ust-deepGold border border-ust-gold/40 hover:bg-ust-amber/25 spring-press flex items-center gap-1.5 shadow-xs">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+                <span>Payout</span>
+              </button>
+            </div>
+
+            <!-- Ledger Breakdown Cards (Gross, 10% Commission, Deposits) -->
+            <div class="grid grid-cols-3 gap-2 pt-1 border-t border-black/[0.06]">
+              <div class="bg-white/70 rounded-xl p-2 border border-black/[0.04]">
+                <span class="text-[9.5px] text-ust-espresso font-medium block">Gross Volume</span>
+                <span class="text-xs font-bold text-ust-obsidian" id="lender-gross-volume">₱4,820.00</span>
+              </div>
+              <div class="bg-white/70 rounded-xl p-2 border border-black/[0.04]">
+                <span class="text-[9.5px] text-ust-crimson font-medium block">10% TigRent Fee</span>
+                <span class="text-xs font-bold text-ust-crimson" id="lender-platform-commission">-₱482.00</span>
+              </div>
+              <div class="bg-white/70 rounded-xl p-2 border border-black/[0.04]">
+                <span class="text-[9.5px] text-emerald-700 font-medium block">Deposits Held</span>
+                <span class="text-xs font-bold text-emerald-700" id="lender-deposits-held">₱2,400.00</span>
+              </div>
+            </div>
+
+            <!-- Rating & Trust Status -->
+            <div class="flex items-center justify-between text-xs pt-1">
+              <div class="flex items-center gap-1.5">
+                <span class="text-ust-espresso font-medium">Lender Rating:</span>
+                <span class="font-extrabold text-ust-obsidian flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 fill-amber-400 stroke-amber-500" viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  <span id="lender-rating-display">4.9</span>
+                </span>
+                <span class="text-[10px] text-ust-espresso" id="lender-rating-count">(18 ratings)</span>
+              </div>
+
+              <div id="lender-trusted-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-ust-deepGold border border-amber-300 flex items-center gap-1">
+                <svg class="w-3 h-3 text-ust-deepGold" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                <span>Verified Trusted Lender</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TIGRENT PREMIUM UPGRADE CARD (₱99/month) -->
+          <div class="apple-glass rounded-2xl p-3.5 shadow-apple border border-ust-gold/40 relative overflow-hidden bg-gradient-to-r from-amber-500/10 via-amber-200/20 to-amber-500/10">
+            <div class="flex items-start justify-between">
+              <div class="flex items-start gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-ust-deepGold to-ust-amber flex items-center justify-center text-white shrink-0 shadow-sm">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs font-bold text-ust-obsidian">TigRent Premium Lender</span>
+                    <span class="text-[10px] font-bold text-ust-deepGold bg-amber-100 px-1.5 py-0.2 rounded border border-amber-300">₱99/mo</span>
+                  </div>
+                  <span class="text-[11px] text-ust-espresso block mt-0.5">Featured placement, Thomasian demand analytics, & org bulk tools</span>
+                </div>
+              </div>
+
+              <!-- Premium Interactive Toggle -->
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="premium-switch-checkbox" onchange="togglePremiumStatus(this.checked)" class="sr-only peer" checked>
+                <div class="w-10 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-ust-gold"></div>
+              </label>
+            </div>
+          </div>
+
+          <!-- CAMPUS DEMAND ANALYTICS (UNLOCKED WITH PREMIUM) -->
+          <div id="analytics-section" class="apple-glass-card rounded-2xl p-3.5 shadow-apple border border-white/80 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-ust-amber/20 flex items-center justify-center text-ust-deepGold">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                </div>
+                <h3 class="text-xs font-bold text-ust-obsidian uppercase tracking-wider">Campus Demand Radar</h3>
+              </div>
+              <span class="text-[10px] font-semibold text-ust-deepGold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">Live UST Trends</span>
+            </div>
+
+            <!-- College Demand Bar Breakdown -->
+            <div class="space-y-2 text-xs">
+              <div>
+                <div class="flex justify-between text-[11px] font-medium mb-0.5">
+                  <span class="text-ust-obsidian">Faculty of Engineering (Roque Ruaño)</span>
+                  <span class="text-ust-deepGold font-bold">38% &bull; Calculators & Drafting</span>
+                </div>
+                <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
+                  <div class="h-full bg-ust-gold rounded-full" style="width: 38%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-[11px] font-medium mb-0.5">
+                  <span class="text-ust-obsidian">College of Architecture (Beato Angelico)</span>
+                  <span class="text-ust-deepGold font-bold">29% &bull; DSLRs & Model Tools</span>
+                </div>
+                <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
+                  <div class="h-full bg-amber-500 rounded-full" style="width: 29%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-[11px] font-medium mb-0.5">
+                  <span class="text-ust-obsidian">CICS (Frassati Building)</span>
+                  <span class="text-ust-deepGold font-bold">18% &bull; Drawing Tablets & Cables</span>
+                </div>
+                <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
+                  <div class="h-full bg-amber-400 rounded-full" style="width: 18%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-[11px] font-medium mb-0.5">
+                  <span class="text-ust-obsidian">Faculty of Pharmacy & Science (Main Bldg)</span>
+                  <span class="text-ust-deepGold font-bold">15% &bull; Stethoscopes & Lab Kits</span>
+                </div>
+                <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
+                  <div class="h-full bg-stone-400 rounded-full" style="width: 15%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INCOMING EXTENSION REQUESTS QUEUE (LENDER) -->
+          <div id="incoming-extensions-section" class="apple-glass-card rounded-2xl p-3.5 shadow-apple border border-amber-200 space-y-3 bg-gradient-to-b from-amber-50/60 to-white/90">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-amber-500/20 flex items-center justify-center text-ust-semanticAmber">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <h3 class="text-xs font-bold text-ust-obsidian uppercase tracking-wider">Incoming Extension Requests</h3>
+              </div>
+              <span id="pending-extensions-counter" class="text-[10px] bg-ust-semanticAmber text-white font-bold px-2 py-0.5 rounded-full">1 Pending</span>
+            </div>
+
+            <!-- List of incoming requests -->
+            <div id="incoming-extensions-list" class="space-y-2.5">
+              <!-- Dynamically populated extension cards with Approve / Reject -->
+            </div>
+          </div>
+
+          <!-- ACTIVE LENT ITEMS & RETURN SETTLEMENT (LENDER) -->
+          <div class="apple-glass-card rounded-2xl p-3.5 shadow-apple border border-white/80 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center text-ust-emerald">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 11 12 14 22 4"/>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                  </svg>
+                </div>
+                <h3 class="text-xs font-bold text-ust-obsidian uppercase tracking-wider">Items Currently Lent Out</h3>
+              </div>
+              <span class="text-[11px] text-ust-espresso" id="lent-items-count">1 Item</span>
+            </div>
+
+            <!-- List of currently lent items with return action -->
+            <div id="lender-lent-items-list" class="space-y-2.5">
+              <!-- Dynamically populated lent items -->
+            </div>
+          </div>
+
+          <!-- LENDER INVENTORY & LIST NEW EQUIPMENT -->
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold text-ust-espresso uppercase tracking-wider">My Equipment Inventory</h3>
+              <button onclick="openAddListingModal()" class="apple-glass-gold px-2.5 py-1 rounded-xl text-xs font-bold text-ust-deepGold border border-ust-gold/40 flex items-center gap-1 spring-press">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>List Equipment</span>
+              </button>
+            </div>
+
+            <div id="lender-inventory-list" class="space-y-2">
+              <!-- Dynamically populated inventory items -->
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Apple Glass Floating Navigation Dock -->
+      <nav class="absolute bottom-0 left-0 right-0 apple-glass-dock px-6 pt-2 pb-6 z-40 flex items-center justify-around select-none">
+        <!-- Tab: Marketplace / Home -->
+        <button onclick="switchRole('borrower')" id="nav-tab-explore" class="flex flex-col items-center gap-0.5 text-ust-deepGold spring-trans">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span class="text-[9.5px] font-semibold">Marketplace</span>
+        </button>
+
+        <!-- Tab: Active Rentals -->
+        <button onclick="scrollToRentals()" id="nav-tab-rentals" class="flex flex-col items-center gap-0.5 text-ust-espresso hover:text-ust-obsidian spring-trans relative">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <span class="text-[9.5px] font-medium">Rentals</span>
+          <span id="nav-rentals-dot" class="w-2 h-2 rounded-full bg-ust-amber absolute -top-0.5 right-1"></span>
+        </button>
+
+        <!-- Tab: Lender Studio Switch -->
+        <button onclick="switchRole('lender')" id="nav-tab-lender" class="flex flex-col items-center gap-0.5 text-ust-espresso hover:text-ust-obsidian spring-trans relative">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          <span class="text-[9.5px] font-medium">Lender Hub</span>
+          <span id="nav-requests-dot" class="w-2 h-2 rounded-full bg-ust-semanticAmber absolute -top-0.5 right-1"></span>
+        </button>
+
+        <!-- Tab: Verification / Profile -->
+        <button onclick="openVerificationModal()" id="nav-tab-profile" class="flex flex-col items-center gap-0.5 text-ust-espresso hover:text-ust-obsidian spring-trans">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span class="text-[9.5px] font-medium">ID Verify</span>
+        </button>
+      </nav>
+
+      <!-- Apple Home Indicator Bar -->
+      <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-black/25 rounded-full z-50 pointer-events-none"></div>
+
+      <!-- ============================================== -->
+      <!-- MODAL SHEETS & DRAWERS LAYER -->
+      <!-- ============================================== -->
+
+      <!-- MODAL 1: STUDENT VERIFICATION & SHEERID -->
+      <div id="modal-verification" class="hidden-force absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col justify-end">
+        <div class="modal-sheet-enter bg-[#FAF8F3] rounded-t-[32px] p-5 shadow-2xl border-t border-white/80 max-h-[90%] overflow-y-auto space-y-4">
+          <div class="w-12 h-1 bg-black/20 rounded-full mx-auto -mt-1 mb-2"></div>
+          
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-ust-emerald to-emerald-400 text-white flex items-center justify-center">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <polyline points="9 12 11 14 15 10"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-ust-obsidian">UST Student Verification</h3>
+                <span class="text-[10px] text-ust-espresso">SheerID Student Pipeline &bull; Active Term: AY 2026-2027</span>
+              </div>
+            </div>
+            <button onclick="closeModal('modal-verification')" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <!-- 1-Click Interactive Test States for Evaluators -->
+          <div class="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-3 space-y-2">
+            <span class="text-[10.5px] font-bold text-ust-deepGold block uppercase tracking-wider">Evaluator 1-Click Verification Test:</span>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="applyVerificationTestState('valid')" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 text-white text-[11px] font-semibold text-center hover:bg-emerald-700 shadow-xs">
+                Pass: Valid AY 2026-27
+              </button>
+              <button onclick="applyVerificationTestState('expired')" class="px-2.5 py-1.5 rounded-xl bg-red-600 text-white text-[11px] font-semibold text-center hover:bg-red-700 shadow-xs">
+                Fail: Expired AY 2024-25
+              </button>
+            </div>
+          </div>
+
+          <!-- Student Evidence Inputs -->
+          <form onsubmit="handleVerificationSubmit(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-[11px] font-bold text-ust-espresso mb-1">UST Official Student Email</label>
+              <input type="email" id="verify-email" value="maria.santos.engg@ust.edu.ph" required class="w-full bg-white border border-black/[0.1] rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-ust-amber">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] font-bold text-ust-espresso mb-1">Student ID Number</label>
+                <input type="text" id="verify-id" value="2023-148291" required class="w-full bg-white border border-black/[0.1] rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-ust-amber">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-ust-espresso mb-1">RegForm Academic Year</label>
+                <select id="verify-ay-select" class="w-full bg-white border border-black/[0.1] rounded-xl px-2 py-2 text-xs focus:ring-2 focus:ring-ust-amber">
+                  <option value="AY 2026-2027">AY 2026-2027 (Active Term)</option>
+                  <option value="AY 2024-2025">AY 2024-2025 (Expired)</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-ust-espresso mb-1">Full Legal Name</label>
+              <input type="text" id="verify-name" value="Maria Carmela Santos" required class="w-full bg-white border border-black/[0.1] rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-ust-amber">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-ust-espresso mb-1">UST College / Building</label>
+              <select id="verify-college" class="w-full bg-white border border-black/[0.1] rounded-xl px-2 py-2 text-xs focus:ring-2 focus:ring-ust-amber">
+                <option value="Faculty of Engineering (Roque Ruaño)">Faculty of Engineering (Roque Ruaño)</option>
+                <option value="College of Architecture (Beato Angelico)">College of Architecture (Beato Angelico)</option>
+                <option value="College of Information & Computing Sciences (Frassati)">CICS (Frassati Building)</option>
+                <option value="Faculty of Pharmacy (Main Building)">Faculty of Pharmacy (Main Building)</option>
+                <option value="College of Science (Main Building)">College of Science (Main Building)</option>
+                <option value="Central Student Council (Tan Yan Kee)">CSC (Tan Yan Kee Student Center)</option>
+              </select>
+            </div>
+
+            <!-- SheerID Simulation Status Banner -->
+            <div id="sheerid-live-box" class="bg-white/80 rounded-xl p-3 border border-black/[0.08] space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-ust-espresso">SheerID Pipeline Status</span>
+                <span id="sheerid-status-badge" class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-emerald-100 text-ust-emerald">Verified Active</span>
+              </div>
+              <p id="sheerid-status-msg" class="text-[11px] text-ust-espresso leading-tight">
+                Academic Year AY 2026-2027 matched UST Registrar records. Borrowing and lending unlocked.
+              </p>
+            </div>
+
+            <button type="submit" class="w-full bg-ust-obsidian hover:bg-black text-white font-bold py-2.5 rounded-xl transition-all spring-press shadow-sm">
+              Save & Run SheerID AY Verification
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- MODAL 2: BOOKING & PAYMONGO DIGITAL CHECKOUT -->
+      <div id="modal-booking" class="hidden-force absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col justify-end">
+        <div class="modal-sheet-enter bg-[#FAF8F3] rounded-t-[32px] p-5 shadow-2xl border-t border-white/80 max-h-[92%] overflow-y-auto space-y-4">
+          <div class="w-12 h-1 bg-black/20 rounded-full mx-auto -mt-1 mb-2"></div>
+
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ust-obsidian">Equipment Booking Checkout</h3>
+            <button onclick="closeModal('modal-booking')" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <!-- Selected Item Card Details -->
+          <div class="bg-white rounded-2xl p-3 border border-black/[0.06] flex items-center gap-3">
+            <div id="modal-book-icon-wrapper" class="w-12 h-12 rounded-xl bg-amber-100 text-ust-deepGold flex items-center justify-center shrink-0">
+              <!-- SVG Icon -->
+            </div>
+            <div class="flex-1">
+              <span id="modal-book-title" class="font-bold text-xs text-ust-obsidian block">Item Title</span>
+              <div class="flex items-center gap-2 text-[10.5px] text-ust-espresso mt-0.5">
+                <span id="modal-book-lender">Lender: Juan Dela Cruz</span>
+                <span id="modal-book-hub" class="text-ust-deepGold font-medium">Roque Ruaño</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Pricing & Duration Calculation -->
+          <div class="bg-white/80 rounded-2xl p-3.5 border border-black/[0.06] space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-ust-obsidian">Rental Duration (1 to 14 Days)</span>
+              <span id="modal-book-days-display" class="text-xs font-extrabold text-ust-deepGold bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">3 Days</span>
+            </div>
+
+            <!-- Duration Slider -->
+            <input type="range" id="modal-book-slider" min="1" max="14" value="3" oninput="updateBookingCalculations(this.value)" class="w-full accent-ust-gold h-1.5 bg-stone-200 rounded-lg cursor-pointer">
+
+            <!-- Dynamic Pricing Math Formula -->
+            <div class="space-y-1.5 text-xs pt-1 border-t border-black/[0.05]">
+              <div class="flex justify-between text-ust-espresso">
+                <span>Daily Rate</span>
+                <span id="modal-book-daily-rate" class="font-medium">₱75.00 / day</span>
+              </div>
+              <div class="flex justify-between text-ust-espresso">
+                <span>Total Rental Fee (<span id="modal-book-days-calc">3</span> days)</span>
+                <span id="modal-book-subtotal-fee" class="font-bold text-ust-obsidian">₱225.00</span>
+              </div>
+              <div class="flex justify-between text-ust-espresso">
+                <span class="flex items-center gap-1">
+                  Refundable Security Deposit
+                  <svg class="w-3 h-3 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                </span>
+                <span id="modal-book-deposit" class="font-medium text-emerald-700">₱300.00</span>
+              </div>
+              <div class="flex justify-between text-xs font-extrabold text-ust-obsidian pt-1 border-t border-black/[0.06]">
+                <span>Total Upfront Payment</span>
+                <span id="modal-book-total-upfront" class="text-sm text-ust-deepGold">₱525.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mandatory Terms & Conditions (Digital Contract Agreement) -->
+          <div class="bg-amber-50/70 rounded-2xl p-3 border border-amber-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-ust-obsidian uppercase tracking-wider">Mandatory Rental Agreement</span>
+              <button onclick="openTermsModal()" class="text-[10px] font-bold text-ust-deepGold underline">Read Contract</button>
+            </div>
+            
+            <p class="text-[10px] text-ust-espresso leading-tight">
+              By checking below, you agree to: (1) Damaged equipment repair deduction, (2) Late penalty of 25%/hr or 1.5x/day, and (3) Physical handoff inspection at UST designated lobby.
+            </p>
+
+            <label class="flex items-start gap-2 cursor-pointer pt-1">
+              <input type="checkbox" id="modal-book-terms-check" class="w-4 h-4 rounded text-ust-gold accent-ust-gold mt-0.5" required>
+              <span class="text-[11px] text-ust-obsidian font-semibold leading-tight">
+                I agree to the UST Peer-To-Peer Rental Agreement, Damaged Equipment Policy, and Late Penalties.
+              </span>
+            </label>
+          </div>
+
+          <!-- PayMongo Digital Payment Selector (GCash or Maya) -->
+          <div class="space-y-2">
+            <span class="text-xs font-bold text-ust-obsidian block">Select PayMongo Payment Gateway</span>
+            
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <label class="apple-glass rounded-xl p-2.5 border border-black/[0.08] flex items-center gap-2 cursor-pointer has-[:checked]:border-ust-gold has-[:checked]:bg-amber-50/50">
+                <input type="radio" name="paymongo-method" value="GCash" checked class="accent-ust-gold">
+                <div class="flex items-center gap-1.5 font-bold text-ust-obsidian">
+                  <div class="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[9px] font-black">G</div>
+                  <span>GCash</span>
+                </div>
+              </label>
+
+              <label class="apple-glass rounded-xl p-2.5 border border-black/[0.08] flex items-center gap-2 cursor-pointer has-[:checked]:border-ust-gold has-[:checked]:bg-amber-50/50">
+                <input type="radio" name="paymongo-method" value="Maya" class="accent-ust-gold">
+                <div class="flex items-center gap-1.5 font-bold text-ust-obsidian">
+                  <div class="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px] font-black">M</div>
+                  <span>Maya</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button onclick="confirmBookingPayment()" id="modal-book-submit-btn" class="w-full bg-ust-deepGold hover:bg-ust-gold text-white font-extrabold py-3 rounded-xl transition-all spring-press shadow-md text-xs">
+            Confirm & Pay via PayMongo
+          </button>
+        </div>
+      </div>
+
+      <!-- MODAL 3: RENTAL EXTENSION REQUEST (BORROWER) -->
+      <div id="modal-extension" class="hidden-force absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col justify-end">
+        <div class="modal-sheet-enter bg-[#FAF8F3] rounded-t-[32px] p-5 shadow-2xl border-t border-white/80 max-h-[88%] overflow-y-auto space-y-4">
+          <div class="w-12 h-1 bg-black/20 rounded-full mx-auto -mt-1 mb-2"></div>
+
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ust-obsidian">Request Rental Extension</h3>
+            <button onclick="closeModal('modal-extension')" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <div class="bg-white rounded-2xl p-3 border border-black/[0.06] text-xs">
+            <span id="ext-item-name" class="font-bold text-ust-obsidian block">Item Name</span>
+            <span id="ext-current-due" class="text-[11px] text-ust-espresso block mt-0.5">Current Due: Friday, 5:00 PM</span>
+          </div>
+
+          <!-- Extension Duration Selection (+1 to +5 days) -->
+          <div class="space-y-2">
+            <label class="text-xs font-bold text-ust-obsidian block">Additional Days Requested</label>
+            <div class="grid grid-cols-5 gap-1.5" id="ext-days-btn-group">
+              <button onclick="selectExtensionDays(1)" class="ext-btn py-2 rounded-xl text-xs font-bold border border-black/[0.1] bg-white text-ust-obsidian hover:bg-stone-50" data-days="1">+1d</button>
+              <button onclick="selectExtensionDays(2)" class="ext-btn py-2 rounded-xl text-xs font-bold border border-ust-gold bg-amber-50 text-ust-deepGold" data-days="2">+2d</button>
+              <button onclick="selectExtensionDays(3)" class="ext-btn py-2 rounded-xl text-xs font-bold border border-black/[0.1] bg-white text-ust-obsidian hover:bg-stone-50" data-days="3">+3d</button>
+              <button onclick="selectExtensionDays(4)" class="ext-btn py-2 rounded-xl text-xs font-bold border border-black/[0.1] bg-white text-ust-obsidian hover:bg-stone-50" data-days="4">+4d</button>
+              <button onclick="selectExtensionDays(5)" class="ext-btn py-2 rounded-xl text-xs font-bold border border-black/[0.1] bg-white text-ust-obsidian hover:bg-stone-50" data-days="5">+5d</button>
+            </div>
+          </div>
+
+          <!-- Extension Financial Math -->
+          <div class="bg-white/80 rounded-2xl p-3 border border-black/[0.06] space-y-1.5 text-xs">
+            <div class="flex justify-between text-ust-espresso">
+              <span>Lender Daily Rate</span>
+              <span id="ext-daily-rate">₱450.00 / day</span>
+            </div>
+            <div class="flex justify-between font-bold text-ust-obsidian pt-1 border-t border-black/[0.05]">
+              <span>Extension Fee (<span id="ext-calc-days">2</span> extra days)</span>
+              <span id="ext-total-fee" class="text-ust-deepGold font-extrabold">₱900.00</span>
+            </div>
+          </div>
+
+          <!-- Note to Lender -->
+          <div>
+            <label class="text-[11px] font-bold text-ust-espresso block mb-1">Reason for Extension (Sent to Lender)</label>
+            <textarea id="ext-note-input" rows="2" class="w-full bg-white border border-black/[0.1] rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-ust-amber" placeholder="e.g., Drafting plate presentation rescheduled to next Monday..."></textarea>
+          </div>
+
+          <button onclick="submitExtensionRequest()" class="w-full bg-ust-deepGold hover:bg-ust-gold text-white font-bold py-2.5 rounded-xl transition-all spring-press text-xs shadow-sm">
+            Submit Extension Request to Lender
+          </button>
+        </div>
+      </div>
+
+      <!-- MODAL 4: CANCELLATION & REFUND SETTLEMENT -->
+      <div id="modal-cancellation" class="hidden-force absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col justify-end">
+        <div class="modal-sheet-enter bg-[#FAF8F3] rounded-t-[32px] p-5 shadow-2xl border-t border-white/80 max-h-[90%] overflow-y-auto space-y-4">
+          <div class="w-12 h-1 bg-black/20 rounded-full mx-auto -mt-1 mb-2"></div>
+
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ust-obsidian">Cancel Rental & Refund Settlement</h3>
+            <button onclick="closeModal('modal-cancellation')" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <p class="text-xs text-ust-espresso">
+            Test TigRent refund scenarios based on UST peer cancellation policies:
+          </p>
+
+          <!-- 3 Cancellation Policy Simulation Scenarios -->
+          <div class="space-y-2 text-xs">
+            <button onclick="executeCancellationRefund('early')" class="w-full text-left p-3 rounded-2xl bg-white border border-black/[0.08] hover:border-emerald-500 spring-trans shadow-xs">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-emerald-800">Early Borrower Cancellation (&gt;24h)</span>
+                <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.2 rounded-full">100% Refund</span>
+              </div>
+              <p class="text-[11px] text-ust-espresso leading-tight">
+                Full 100% refund of rental fee + 100% security deposit back to GCash/Maya.
+              </p>
+            </button>
+
+            <button onclick="executeCancellationRefund('late')" class="w-full text-left p-3 rounded-2xl bg-white border border-black/[0.08] hover:border-amber-500 spring-trans shadow-xs">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-amber-800">Late Borrower Cancellation (&lt;24h)</span>
+                <span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.2 rounded-full">80% Fee Refund</span>
+              </div>
+              <p class="text-[11px] text-ust-espresso leading-tight">
+                80% refund of rental fee + 100% security deposit. 20% rental fee retained as lender compensation.
+              </p>
+            </button>
+
+            <button onclick="executeCancellationRefund('lender')" class="w-full text-left p-3 rounded-2xl bg-white border border-black/[0.08] hover:border-red-500 spring-trans shadow-xs">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-red-800">Lender Cancellation</span>
+                <span class="text-[10px] font-bold bg-red-100 text-red-800 px-2 py-0.2 rounded-full">100% Refund + Penalty</span>
+              </div>
+              <p class="text-[11px] text-ust-espresso leading-tight">
+                Borrower receives 100% full refund immediately. Lender receives trust rating penalty.
+              </p>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL 5: RETURN CONDITION & DEPOSIT SETTLEMENT CALCULATOR -->
+      <div id="modal-return-settlement" class="hidden-force absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col justify-end">
+        <div class="modal-sheet-enter bg-[#FAF8F3] rounded-t-[32px] p-5 shadow-2xl border-t border-white/80 max-h-[92%] overflow-y-auto space-y-4">
+          <div class="w-12 h-1 bg-black/20 rounded-full mx-auto -mt-1 mb-2"></div>
+
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ust-obsidian">Return Inspection & Deposit Settlement</h3>
+            <button onclick="closeModal('modal-return-settlement')" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <!-- Item & Deposit Info -->
+          <div class="bg-white rounded-2xl p-3 border border-black/[0.06] text-xs space-y-1">
+            <div class="flex justify-between">
+              <span class="font-bold text-ust-obsidian" id="settle-item-title">Item Title</span>
+              <span class="text-emerald-700 font-bold" id="settle-deposit-original">Deposit: ₱1,500.00</span>
+            </div>
+            <span class="text-[10.5px] text-ust-espresso block">Campus Handoff Inspection at Designated UST Hub</span>
+          </div>
+
+          <!-- Return Condition Selector -->
+          <div class="space-y-2 text-xs">
+            <label class="font-bold text-ust-obsidian block">Handoff Condition Assessment</label>
+
+            <div class="space-y-1.5">
+              <label class="apple-glass rounded-xl p-2.5 border border-black/[0.08] flex items-center justify-between cursor-pointer has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50">
+                <div class="flex items-center gap-2">
+                  <input type="radio" name="return-condition" value="normal" checked onchange="updateSettlementCalculation()" class="accent-emerald-600">
+                  <span class="font-bold text-ust-obsidian">Normal Return (Pristine Condition, On-Time)</span>
+                </div>
+                <span class="text-[10px] text-emerald-700 font-bold">100% Refund</span>
+              </label>
+
+              <label class="apple-glass rounded-xl p-2.5 border border-black/[0.08] flex items-center justify-between cursor-pointer has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50/50">
+                <div class="flex items-center gap-2">
+                  <input type="radio" name="return-condition" value="late" onchange="updateSettlementCalculation()" class="accent-amber-600">
+                  <span class="font-bold text-ust-obsidian">Late Return Penalty</span>
+                </div>
+                <span class="text-[10px] text-amber-700 font-bold">25%/hr or 1.5x/day</span>
+              </label>
+
+              <label class="apple-glass rounded-xl p-2.5 border border-black/[0.08] flex items-center justify-between cursor-pointer has-[:checked]:border-red-500 has-[:checked]:bg-red-50/50">
+                <div class="flex items-center gap-2">
+                  <input type="radio" name="return-condition" value="damaged" onchange="updateSettlementCalculation()" class="accent-red-600">
+                  <span class="font-bold text-ust-obsidian">Minor Damage / Repair Deduction</span>
+                </div>
+                <span class="text-[10px] text-red-700 font-bold">Custom Deduction</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Deduction Inputs (Shown dynamically) -->
+          <div id="settle-deduction-inputs" class="bg-stone-50 rounded-2xl p-3 border border-black/[0.06] space-y-2 text-xs hidden-force">
+            <div id="settle-late-options">
+              <label class="block text-[11px] font-bold text-ust-espresso mb-1">Overdue Duration</label>
+              <select id="settle-late-hours" onchange="updateSettlementCalculation()" class="w-full bg-white border border-black/[0.1] rounded-xl px-2.5 py-1.5 text-xs">
+                <option value="2">2 Hours Overdue (50% daily rate)</option>
+                <option value="4">4 Hours Overdue (100% daily rate)</option>
+                <option value="24">1 Day Overdue (1.5x daily rate penalty)</option>
+              </select>
+            </div>
+
+            <div id="settle-damage-options" class="hidden-force">
+              <label class="block text-[11px] font-bold text-ust-espresso mb-1">Assessed Damage / Missing Cable Deduction (₱)</label>
+              <input type="number" id="settle-damage-fee" value="250" oninput="updateSettlementCalculation()" class="w-full bg-white border border-black/[0.1] rounded-xl px-3 py-1.5 text-xs">
+            </div>
+          </div>
+
+          <!-- Refund Summary Breakdown -->
+          <div class="bg-white/80 rounded-2xl p-3 border border-black/[0.06] space-y-1.5 text-xs">
+            <div class="flex justify-between text-ust-espresso">
+              <span>Security Deposit Held</span>
+              <span id="settle-calc-deposit" class="font-medium">₱1,500.00</span>
+            </div>
+            <div class="flex justify-between text-ust-crimson font-medium">
+              <span>Total Deductions (Damage / Late)</span>
+              <span id="settle-calc-deductions">-₱0.00</span>
+            </div>
+            <div class="flex justify-between text-xs font-extrabold text-ust-obsidian pt-1 border-t border-black/[0.06]">
+              <span>Net Security Deposit Refunded to Borrower</span>
+              <span id="settle-calc-net-refund" class="text-sm text-emerald-700">₱1,500.00</span>
+            </div>
+          </div>
+
+          <button onclick="finalizeReturnSettlement()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition-all spring-press text-xs shadow-sm">
+            Approve Handoff & Release Refund via PayMongo
+          </button>
+        </div>
+      </div>
+
+      <!-- MODAL 6: MUTUAL TWO-WAY RATING -->
+      <div id="modal-rating" class="hidden-force absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col justify-end">
+        <div class="modal-sheet-enter bg-[#FAF8F3] rounded-t-[32px] p-5 shadow-2xl border-t border-white/80 max-h-[90%] overflow-y-auto space-y-4">
+          <div class="w-12 h-1 bg-black/20 rounded-full mx-auto -mt-1 mb-2"></div>
+
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ust-obsidian" id="rating-modal-title">Rate Rental Partner</h3>
+            <button onclick="closeModal('modal-rating')" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <div class="text-center py-2 space-y-1">
+            <span class="text-xs text-ust-espresso block" id="rating-subtitle">How was your peer-to-peer exchange with Beatrice Lim?</span>
+            
+            <!-- 5 Interactive Vector SVG Stars -->
+            <div class="flex items-center justify-center gap-1.5 py-2" id="star-rating-container">
+              <button onclick="selectStarRating(1)" class="star-btn text-amber-400 spring-trans hover:scale-110" data-star="1">
+                <svg class="w-7 h-7 fill-amber-400 stroke-amber-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+              <button onclick="selectStarRating(2)" class="star-btn text-amber-400 spring-trans hover:scale-110" data-star="2">
+                <svg class="w-7 h-7 fill-amber-400 stroke-amber-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+              <button onclick="selectStarRating(3)" class="star-btn text-amber-400 spring-trans hover:scale-110" data-star="3">
+                <svg class="w-7 h-7 fill-amber-400 stroke-amber-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+              <button onclick="selectStarRating(4)" class="star-btn text-amber-400 spring-trans hover:scale-110" data-star="4">
+                <svg class="w-7 h-7 fill-amber-400 stroke-amber-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+              <button onclick="selectStarRating(5)" class="star-btn text-amber-400 spring-trans hover:scale-110" data-star="5">
+                <svg class="w-7 h-7 fill-amber-400 stroke-amber-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+            </div>
+            <span class="text-xs font-bold text-ust-deepGold block" id="star-rating-label">5.0 - Exceptional Thomasian Peer</span>
+          </div>
+
+          <!-- Reliability Tags -->
+          <div class="space-y-1.5 text-xs">
+            <span class="font-bold text-ust-espresso block">Reliability Badges:</span>
+            <div class="flex flex-wrap gap-1.5" id="rating-tags-container">
+              <button onclick="toggleRatingTag(this)" class="tag-pill px-2.5 py-1 rounded-full bg-white border border-black/[0.08] text-ust-obsidian text-[11px] font-medium hover:border-ust-amber">Punctual Meetup</button>
+              <button onclick="toggleRatingTag(this)" class="tag-pill px-2.5 py-1 rounded-full bg-white border border-black/[0.08] text-ust-obsidian text-[11px] font-medium hover:border-ust-amber">Equipment in Pristine Condition</button>
+              <button onclick="toggleRatingTag(this)" class="tag-pill px-2.5 py-1 rounded-full bg-white border border-black/[0.08] text-ust-obsidian text-[11px] font-medium hover:border-ust-amber">Helpful Advice</button>
+              <button onclick="toggleRatingTag(this)" class="tag-pill px-2.5 py-1 rounded-full bg-white border border-black/[0.08] text-ust-obsidian text-[11px] font-medium hover:border-ust-amber">Easy Communication</button>
+            </div>
+          </div>
+
+          <!-- Review Comment -->
+          <div>
+            <label class="block text-[11px] font-bold text-ust-espresso mb-1">Feedback / Review</label>
+            <textarea id="rating-comment" rows="2" class="w-full bg-white border border-black/[0.1] rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-ust-amber" placeholder="Share your experience to help the UST community..."></textarea>
+          </div>
+
+          <button onclick="submitMutualRating()" class="w-full bg-ust-obsidian hover:bg-black text-white font-bold py-2.5 rounded-xl transition-all spring-press text-xs shadow-sm">
+            Submit Rating & Recalculate Trust
+          </button>
+        </div>
+      </div>
+
+      <!-- MODAL 7: LOW-RATING SUSPENSION APPEAL -->
+      <div id="modal-appeal" class="hidden-force absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col justify-end">
+        <div class="modal-sheet-enter bg-[#FAF8F3] rounded-t-[32px] p-5 shadow-2xl border-t border-white/80 max-h-[90%] overflow-y-auto space-y-4">
+          <div class="w-12 h-1 bg-black/20 rounded-full mx-auto -mt-1 mb-2"></div>
+
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ust-crimson">Account Suspension Appeal</h3>
+            <button onclick="closeModal('modal-appeal')" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <div class="bg-red-50 border border-red-200 rounded-2xl p-3 text-xs space-y-1 text-red-900">
+            <span class="font-bold block">Automatic Quality Protection Guardrail</span>
+            <p class="text-[11px] text-red-800 leading-tight">
+              TigRent automatically pauses accounts when trust ratings drop below 3.0 threshold to protect student equipment safety.
+            </p>
+          </div>
+
+          <!-- 1-Click Restore Demo Button for Evaluators -->
+          <div class="bg-amber-50 rounded-2xl p-3 border border-amber-200 space-y-2">
+            <span class="text-[11px] font-bold text-ust-deepGold block uppercase">Evaluator Quick Restore:</span>
+            <button onclick="restoreAccountRatingDemo()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs transition-all spring-press shadow-xs">
+              1-Click Restore Account & Reset Trust to 4.9
+            </button>
+          </div>
+
+          <form onsubmit="handleAppealSubmit(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-[11px] font-bold text-ust-espresso mb-1">Reason for Appeal / Explanation</label>
+              <textarea id="appeal-text" rows="3" required class="w-full bg-white border border-black/[0.1] rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-ust-amber" placeholder="Explain the circumstances surrounding the low rating..."></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-ust-obsidian hover:bg-black text-white font-bold py-2.5 rounded-xl transition-all spring-press shadow-sm">
+              Submit Formal Appeal to Student Council
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- MODAL 8: LIST NEW EQUIPMENT (LENDER STUDIO) -->
+      <div id="modal-add-listing" class="hidden-force absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col justify-end">
+        <div class="modal-sheet-enter bg-[#FAF8F3] rounded-t-[32px] p-5 shadow-2xl border-t border-white/80 max-h-[92%] overflow-y-auto space-y-4">
+          <div class="w-12 h-1 bg-black/20 rounded-full mx-auto -mt-1 mb-2"></div>
+
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ust-obsidian">List Academic Equipment</h3>
+            <button onclick="closeModal('modal-add-listing')" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <form onsubmit="handlePublishListing(event)" class="space-y-3 text-xs">
+            <div>
+              <label class="block text-[11px] font-bold text-ust-espresso mb-1">Equipment Title</label>
+              <input type="text" id="new-item-title" placeholder="e.g., Casio fx-991ES Plus II" required class="w-full bg-white border border-black/[0.1] rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-ust-amber">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] font-bold text-ust-espresso mb-1">Category</label>
+                <select id="new-item-category" class="w-full bg-white border border-black/[0.1] rounded-xl px-2 py-2 text-xs">
+                  <option value="Calculators">Calculators</option>
+                  <option value="Cameras & Media">Cameras & Media</option>
+                  <option value="Drafting & Arch">Drafting & Arch</option>
+                  <option value="Audio & Projectors">Audio & Projectors</option>
+                  <option value="Lab & Med Gear">Lab & Med Gear</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-ust-espresso mb-1">Pickup Campus Hub</label>
+                <select id="new-item-hub" class="w-full bg-white border border-black/[0.1] rounded-xl px-2 py-2 text-xs">
+                  <option value="Roque Ruaño Lobby">Roque Ruaño (Engineering)</option>
+                  <option value="Beato Angelico Lobby">Beato Angelico (Arch)</option>
+                  <option value="Frassati Lobby">Frassati Lobby (CICS)</option>
+                  <option value="Main Building">Main Building</option>
+                  <option value="Tan Yan Kee Student Center">Tan Yan Kee Center</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] font-bold text-ust-espresso mb-1">Daily Rate (₱/day)</label>
+                <input type="number" id="new-item-price" min="10" max="2000" value="80" required class="w-full bg-white border border-black/[0.1] rounded-xl px-3 py-2 text-xs">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-ust-espresso mb-1">Security Deposit (₱)</label>
+                <input type="number" id="new-item-deposit" min="50" max="10000" value="350" required class="w-full bg-white border border-black/[0.1] rounded-xl px-3 py-2 text-xs">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-ust-espresso mb-1">Item Condition Notes</label>
+              <input type="text" id="new-item-condition" placeholder="e.g., Pristine condition with hard case and fresh batteries" required class="w-full bg-white border border-black/[0.1] rounded-xl px-3 py-2 text-xs">
+            </div>
+
+            <label class="flex items-start gap-2 cursor-pointer pt-1">
+              <input type="checkbox" required class="w-4 h-4 rounded text-ust-gold accent-ust-gold mt-0.5">
+              <span class="text-[11px] text-ust-obsidian leading-tight">
+                I agree to the 10% platform commission and UST physical handoff meetup protocol.
+              </span>
+            </label>
+
+            <button type="submit" class="w-full bg-ust-deepGold hover:bg-ust-gold text-white font-bold py-2.5 rounded-xl transition-all spring-press shadow-sm text-xs">
+              Publish Listing to Marketplace
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- MODAL 9: MANDATORY TERMS & CONDITIONS FULL CONTRACT -->
+      <div id="modal-terms" class="hidden-force absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex flex-col justify-end">
+        <div class="modal-sheet-enter bg-[#FAF8F3] rounded-t-[32px] p-5 shadow-2xl border-t border-white/80 max-h-[85%] overflow-y-auto space-y-3">
+          <div class="w-12 h-1 bg-black/20 rounded-full mx-auto -mt-1 mb-2"></div>
+
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-ust-obsidian">UST Peer-To-Peer Rental Agreement</h3>
+            <button onclick="closeModal('modal-terms')" class="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center text-ust-espresso">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <div class="space-y-3 text-xs text-ust-espresso leading-relaxed">
+            <div class="bg-white rounded-xl p-3 border border-black/[0.06]">
+              <span class="font-bold text-ust-obsidian block mb-1">1. Damaged Equipment Policy</span>
+              <p>Borrowers are responsible for maintaining equipment in the condition received. In case of cosmetic scratch or functional defect, repair costs or full replacement value are deducted from the security deposit upon inspection.</p>
+            </div>
+
+            <div class="bg-white rounded-xl p-3 border border-black/[0.06]">
+              <span class="font-bold text-ust-obsidian block mb-1">2. Late Return & Unreturned Item Policy</span>
+              <p>Returning an item past the agreed return window incurs an automated fee of 25% of the daily rate per overdue hour, or 1.5x the daily rate per overdue day, automatically deducted from the security deposit.</p>
+            </div>
+
+            <div class="bg-white rounded-xl p-3 border border-black/[0.06]">
+              <span class="font-bold text-ust-obsidian block mb-1">3. Campus Meetup & Inspection Protocol</span>
+              <p>All handoffs and returns must occur exclusively at designated UST lobbies (Roque Ruaño, Beato Angelico, Frassati, Main Building, or Tan Yan Kee). Both parties must physically verify power-on and condition.</p>
+            </div>
+          </div>
+
+          <button onclick="closeModal('modal-terms')" class="w-full bg-ust-obsidian text-white font-bold py-2 rounded-xl text-xs">
+            I Understand the Agreement Terms
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Dynamic Notification Toast Container -->
+  <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm"></div>
+
+  <!-- ============================================== -->
+  <!-- JAVASCRIPT APPLICATION CORE (VANILLA JS) -->
+  <!-- ============================================== -->
+  <script>
+    // System Master Academic Year
+    const SYSTEM_ACADEMIC_YEAR = 'AY 2026-2027';
+    window.SYSTEM_ACADEMIC_YEAR = SYSTEM_ACADEMIC_YEAR;
+
+    // Application Central State Store
+    var state = {
+      systemAY: SYSTEM_ACADEMIC_YEAR,
+      activeRole: 'borrower', // 'borrower' | 'lender'
+      
+      // User Profile & Verification
+      user: {
+        name: 'Maria Carmela Santos',
+        email: 'maria.santos.engg@ust.edu.ph',
+        studentId: '2023-148291',
+        college: 'Faculty of Engineering (Roque Ruaño)',
+        isVerified: true,
+        regFormAY: 'AY 2026-2027',
+        sheerIdVerified: true,
+        trustRating: 4.9,
+        ratingCount: 18,
+        isSuspended: false,
+        suspensionReason: '',
+        isPremiumLender: true,
+        walletBalance: 4338.00,
+        grossVolume: 4820.00,
+        commissionPaid: 482.00,
+        depositsHeld: 2400.00
+      },
+
+      // Tomasito Mascot Speech Array
+      mascotIndex: 0,
+      mascotQuotes: [
+        "Roque Ruaño midterms alert: Scientific calculators & drafting tubes are up 48% today!",
+        "Beato Angelico students are looking for Canon DSLRs—list yours to earn passive income!",
+        "Maintain a 4.8+ rating to unlock your Verified Trusted Lender badge!",
+        "Meet safely at designated UST lobbies: Frassati, Beato, or Roque Ruaño guard posts!",
+        "Tan Yan Kee Org Fair season is here: PA sound systems and projectors booking fast!",
+        "Always test and verify equipment condition before completing return settlements!"
+      ],
+
+      // Selected Filters
+      searchQuery: '',
+      selectedCategory: 'all',
+      selectedHub: 'all',
+
+      // Modals State
+      activeBookingItem: null,
+      activeExtensionRental: null,
+      activeSettlementRental: null,
+      activeRatingTarget: null,
+      selectedStars: 5,
+
+      // Categories Config
+      categories: [
+        { id: 'all', label: 'All Items' },
+        { id: 'Calculators', label: 'Calculators' },
+        { id: 'Cameras & Media', label: 'Cameras & Media' },
+        { id: 'Drafting & Arch', label: 'Drafting & Arch' },
+        { id: 'Audio & Projectors', label: 'Audio & Projectors' },
+        { id: 'Lab & Med Gear', label: 'Lab & Med Gear' }
+      ],
+
+      // Marketplace Equipment Catalog
+      listings: [
+        {
+          id: 'item-1',
+          title: 'Casio fx-991CW ClassWiz Scientific Calculator',
+          category: 'Calculators',
+          hub: 'Roque Ruaño Lobby',
+          dailyRate: 75,
+          deposit: 300,
+          lenderName: 'Juan Dela Cruz',
+          lenderRating: 4.9,
+          lenderCount: 24,
+          isTrusted: true,
+          isFeatured: true,
+          condition: 'Mint condition &bull; Allowed in UST Engineering Midterms',
+          iconType: 'calc'
+        },
+        {
+          id: 'item-2',
+          title: 'Canon EOS 200D II DSLR Kit + 18-55mm STM',
+          category: 'Cameras & Media',
+          hub: 'Beato Angelico Lobby',
+          dailyRate: 450,
+          deposit: 1500,
+          lenderName: 'Beatrice Lim',
+          lenderRating: 4.9,
+          lenderCount: 31,
+          isTrusted: true,
+          isFeatured: true,
+          condition: 'Includes 64GB SanDisk card, neck strap, 2 batteries',
+          iconType: 'camera'
+        },
+        {
+          id: 'item-3',
+          title: 'Rotring Rapidograph Technical Pen Set (0.1, 0.3, 0.5)',
+          category: 'Drafting & Arch',
+          hub: 'Beato Angelico Lobby',
+          dailyRate: 120,
+          deposit: 500,
+          lenderName: 'Paolo Mendoza',
+          lenderRating: 4.8,
+          lenderCount: 14,
+          isTrusted: true,
+          isFeatured: false,
+          condition: 'Ultrasonic cleaned, filled with fresh waterproof black ink',
+          iconType: 'drafting'
+        },
+        {
+          id: 'item-4',
+          title: 'Epson EB-E01 3300 Lumens Org Projector + HDMI',
+          category: 'Audio & Projectors',
+          hub: 'Tan Yan Kee Student Center',
+          dailyRate: 350,
+          deposit: 1000,
+          lenderName: 'CSC Engineering',
+          lenderRating: 4.9,
+          lenderCount: 42,
+          isTrusted: true,
+          isFeatured: false,
+          condition: 'Vibrant HDMI projection, ideal for org defense & seminars',
+          iconType: 'projector'
+        },
+        {
+          id: 'item-5',
+          title: 'Welch Allyn Professional Stethoscope & BP Cuff',
+          category: 'Lab & Med Gear',
+          hub: 'Main Building',
+          dailyRate: 180,
+          deposit: 800,
+          lenderName: 'Dr. Chloe Tan',
+          lenderRating: 4.9,
+          lenderCount: 19,
+          isTrusted: true,
+          isFeatured: true,
+          condition: 'Medical grade pediatric/adult diaphragm, sanitized',
+          iconType: 'med'
+        },
+        {
+          id: 'item-6',
+          title: 'Wacom Intuos Pro Graphic Tablet (Medium)',
+          category: 'Drafting & Arch',
+          hub: 'Frassati Lobby',
+          dailyRate: 220,
+          deposit: 750,
+          lenderName: 'Mark Rivera',
+          lenderRating: 4.6,
+          lenderCount: 9,
+          isTrusted: false,
+          isFeatured: false,
+          condition: 'Pro Pen 2 with replacement nibs, USB-C cable included',
+          iconType: 'tablet'
+        },
+        {
+          id: 'item-7',
+          title: 'TI-Nspire CX II CAS Graphing Calculator',
+          category: 'Calculators',
+          hub: 'Roque Ruaño Lobby',
+          dailyRate: 190,
+          deposit: 800,
+          lenderName: 'Juan Dela Cruz',
+          lenderRating: 4.9,
+          lenderCount: 24,
+          isTrusted: true,
+          isFeatured: false,
+          condition: 'Color backlit display with rechargeable battery',
+          iconType: 'calc'
+        },
+        {
+          id: 'item-8',
+          title: 'Sony Alpha a6400 Mirrorless + Sigma 30mm f/1.4',
+          category: 'Cameras & Media',
+          hub: 'Beato Angelico Lobby',
+          dailyRate: 550,
+          deposit: 2000,
+          lenderName: 'Beatrice Lim',
+          lenderRating: 4.9,
+          lenderCount: 31,
+          isTrusted: true,
+          isFeatured: true,
+          condition: 'Eye-AF autofocus, pristine 4K video for student films',
+          iconType: 'camera'
+        }
+      ],
+
+      // Active Rentals (Borrower & Lender Shared Reactive Records)
+      rentals: [
+        {
+          id: 'rent-101',
+          itemId: 'item-2',
+          title: 'Canon EOS 200D II DSLR Kit + 18-55mm STM',
+          borrowerName: 'Maria Carmela Santos',
+          lenderName: 'Beatrice Lim',
+          lenderRating: 4.9,
+          pickupHub: 'Beato Angelico Lobby',
+          startDate: 'Nov 16, 2026',
+          dueDate: 'Nov 19, 2026',
+          dailyRate: 450,
+          days: 3,
+          rentalFee: 1350,
+          deposit: 1500,
+          totalPaid: 2850,
+          status: 'Pending Extension', // 'Active' | 'Pending Extension' | 'Active (Extended)' | 'Completed' | 'Cancelled'
+          extensionDays: 2,
+          extensionFee: 900,
+          extensionNote: 'Architecture presentation rescheduled to Friday afternoon',
+          paymongoRef: 'PM-GC-894102',
+          ratedByBorrower: false,
+          ratedByLender: false
+        }
+      ]
+    };
+
+    window.state = state;
+    window.switchRole = switchRole;
+    window.cycleTomasitoSpeech = cycleTomasitoSpeech;
+    window.openVerificationModal = openVerificationModal;
+    window.handleVerificationSubmit = handleVerificationSubmit;
+    window.applyVerificationTestState = applyVerificationTestState;
+    window.toggleEvaluatorVerification = toggleEvaluatorVerification;
+    window.checkSuspensionStatus = checkSuspensionStatus;
+    window.toggleEvaluatorRating = toggleEvaluatorRating;
+    window.openAppealModal = openAppealModal;
+    window.restoreAccountRatingDemo = restoreAccountRatingDemo;
+    window.handleAppealSubmit = handleAppealSubmit;
+    window.togglePremiumStatus = togglePremiumStatus;
+    window.toggleEvaluatorPremium = toggleEvaluatorPremium;
+    window.initiateBooking = initiateBooking;
+    window.confirmBookingPayment = confirmBookingPayment;
+    window.openExtensionModal = openExtensionModal;
+    window.selectExtensionDays = selectExtensionDays;
+    window.submitExtensionRequest = submitExtensionRequest;
+    window.approveExtension = approveExtension;
+    window.rejectExtension = rejectExtension;
+    window.openCancellationModal = openCancellationModal;
+    window.executeCancellationRefund = executeCancellationRefund;
+    window.openReturnSettlementModal = openReturnSettlementModal;
+    window.updateSettlementCalculation = updateSettlementCalculation;
+    window.finalizeReturnSettlement = finalizeReturnSettlement;
+    window.openRatingModal = openRatingModal;
+    window.selectStarRating = selectStarRating;
+    window.submitMutualRating = submitMutualRating;
+    window.simulateLenderPayout = simulateLenderPayout;
+    window.openAddListingModal = openAddListingModal;
+    window.handlePublishListing = handlePublishListing;
+    window.openTermsModal = openTermsModal;
+    window.closeModal = closeModal;
+    window.showToast = showToast;
+    window.toggleDeviceFrame = toggleDeviceFrame;
+    window.resetPrototypeData = resetPrototypeData;
+
+    // ==========================================
+    // INITIALIZATION & EVENT HOOKS
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCategoryPills();
+      renderMarketplace();
+      renderBorrowerRentals();
+      renderLenderHub();
+      updateHeaderVerificationUI();
+      updateTomasitoQuote();
+      updateClock();
+      setInterval(updateClock, 30000);
+    });
+
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      const el = document.getElementById('status-clock');
+      if (el) el.textContent = `${hours}:${minutes}`;
+    }
+
+    // ==========================================
+    // ROLE SWITCHING: BORROWER <-> LENDER
+    // ==========================================
+    function switchRole(role) {
+      state.activeRole = role;
+      
+      const borrowerView = document.getElementById('borrower-view');
+      const lenderView = document.getElementById('lender-view');
+      const borrowerBtn = document.getElementById('role-borrower-btn');
+      const lenderBtn = document.getElementById('role-lender-btn');
+      const navExplore = document.getElementById('nav-tab-explore');
+      const navLender = document.getElementById('nav-tab-lender');
+
+      if (role === 'borrower') {
+        borrowerView.classList.remove('hidden-force');
+        lenderView.classList.add('hidden-force');
+
+        borrowerBtn.className = "flex-1 py-1.5 rounded-[10px] text-xs font-semibold text-center transition-all spring-trans z-10 flex items-center justify-center gap-1.5 text-ust-obsidian bg-white shadow-sm";
+        lenderBtn.className = "flex-1 py-1.5 rounded-[10px] text-xs font-medium text-center transition-all spring-trans z-10 flex items-center justify-center gap-1.5 text-ust-espresso hover:text-ust-obsidian";
+
+        navExplore.classList.add('text-ust-deepGold');
+        navExplore.classList.remove('text-ust-espresso');
+        navLender.classList.add('text-ust-espresso');
+        navLender.classList.remove('text-ust-deepGold');
+      } else {
+        borrowerView.classList.add('hidden-force');
+        lenderView.classList.remove('hidden-force');
+
+        lenderBtn.className = "flex-1 py-1.5 rounded-[10px] text-xs font-semibold text-center transition-all spring-trans z-10 flex items-center justify-center gap-1.5 text-ust-obsidian bg-white shadow-sm";
+        borrowerBtn.className = "flex-1 py-1.5 rounded-[10px] text-xs font-medium text-center transition-all spring-trans z-10 flex items-center justify-center gap-1.5 text-ust-espresso hover:text-ust-obsidian";
+
+        navLender.classList.add('text-ust-deepGold');
+        navLender.classList.remove('text-ust-espresso');
+        navExplore.classList.add('text-ust-espresso');
+        navExplore.classList.remove('text-ust-deepGold');
+
+        renderLenderHub();
+      }
+    }
+
+    // ==========================================
+    // TOMASITO MASCOT INTERACTIVITY
+    // ==========================================
+    function cycleTomasitoSpeech() {
+      state.mascotIndex = (state.mascotIndex + 1) % state.mascotQuotes.length;
+      updateTomasitoQuote();
+      
+      // Micro-haptic toast
+      showToast("Tomasito: UST campus intelligence updated");
+    }
+
+    function updateTomasitoQuote() {
+      const quoteEl = document.getElementById('tomasito-quote-text');
+      if (quoteEl) {
+        quoteEl.innerHTML = `"${state.mascotQuotes[state.mascotIndex]}"`;
+      }
+    }
+
+    // ==========================================
+    // STUDENT VERIFICATION (AY CHECK + SHEERID)
+    // ==========================================
+    function openVerificationModal() {
+      document.getElementById('modal-verification').classList.remove('hidden-force');
+      document.getElementById('verify-email').value = state.user.email;
+      document.getElementById('verify-id').value = state.user.studentId;
+      document.getElementById('verify-name').value = state.user.name;
+      document.getElementById('verify-college').value = state.user.college;
+      document.getElementById('verify-ay-select').value = state.user.regFormAY;
+      updateSheerIDDisplay();
+    }
+
+    function updateSheerIDDisplay() {
+      const statusBadge = document.getElementById('sheerid-status-badge');
+      const statusMsg = document.getElementById('sheerid-status-msg');
+
+      if (state.user.isVerified) {
+        statusBadge.textContent = "Verified Active";
+        statusBadge.className = "px-1.5 py-0.2 rounded text-[10px] font-bold bg-emerald-100 text-ust-emerald";
+        statusMsg.textContent = `RegForm ${state.user.regFormAY} verified via UST SheerID pipeline. Privileges active.`;
+      } else {
+        statusBadge.textContent = "Validation Failed";
+        statusBadge.className = "px-1.5 py-0.2 rounded text-[10px] font-bold bg-red-100 text-ust-crimson";
+        statusMsg.textContent = `RegForm ${state.user.regFormAY} expired. Must match ${SYSTEM_ACADEMIC_YEAR}. Borrowing & lending locked.`;
+      }
+    }
+
+    function handleVerificationSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('verify-email').value;
+      const ay = document.getElementById('verify-ay-select').value;
+      const name = document.getElementById('verify-name').value;
+      const college = document.getElementById('verify-college').value;
+      const id = document.getElementById('verify-id').value;
+
+      state.user.email = email;
+      state.user.name = name;
+      state.user.college = college;
+      state.user.studentId = id;
+      state.user.regFormAY = ay;
+
+      if (ay === SYSTEM_ACADEMIC_YEAR) {
+        state.user.isVerified = true;
+        state.user.sheerIdVerified = true;
+        showToast("SheerID: Verified Student for " + SYSTEM_ACADEMIC_YEAR);
+      } else {
+        state.user.isVerified = false;
+        state.user.sheerIdVerified = false;
+        showToast("Verification Failed: Expired RegForm (" + ay + ")");
+      }
+
+      updateHeaderVerificationUI();
+      closeModal('modal-verification');
+    }
+
+    function applyVerificationTestState(type) {
+      if (type === 'valid') {
+        state.user.regFormAY = SYSTEM_ACADEMIC_YEAR;
+        state.user.isVerified = true;
+        state.user.sheerIdVerified = true;
+        document.getElementById('verify-ay-select').value = SYSTEM_ACADEMIC_YEAR;
+        updateSheerIDDisplay();
+        updateHeaderVerificationUI();
+        showToast("Pass: SheerID validated RegForm for " + SYSTEM_ACADEMIC_YEAR);
+      } else {
+        state.user.regFormAY = 'AY 2024-2025';
+        state.user.isVerified = false;
+        state.user.sheerIdVerified = false;
+        document.getElementById('verify-ay-select').value = 'AY 2024-2025';
+        updateSheerIDDisplay();
+        updateHeaderVerificationUI();
+        showToast("Fail: RegForm AY 2024-2025 is expired. Transactions locked.");
+      }
+    }
+
+    function updateHeaderVerificationUI() {
+      const verifyPill = document.getElementById('header-verification-pill');
+      const verifyDot = document.getElementById('header-verify-dot');
+      const verifyText = document.getElementById('header-verify-text');
+      const expiredBanner = document.getElementById('expired-regform-banner');
+      const evalLabel = document.getElementById('eval-verify-label');
+      const evalBtn = document.getElementById('eval-toggle-verify-btn');
+
+      if (state.user.isVerified) {
+        verifyDot.className = "w-2 h-2 rounded-full bg-ust-emerald";
+        verifyText.textContent = "AY 2026-27";
+        verifyText.className = "text-ust-emerald font-medium";
+        expiredBanner.classList.add('hidden-force');
+        evalLabel.textContent = "AY 2026-27 (Valid)";
+        evalBtn.className = "px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-emerald-50 text-ust-emerald border border-emerald-200 hover:bg-emerald-100";
+      } else {
+        verifyDot.className = "w-2 h-2 rounded-full bg-ust-crimson";
+        verifyText.textContent = "Expired AY";
+        verifyText.className = "text-ust-crimson font-medium";
+        expiredBanner.classList.remove('hidden-force');
+        evalLabel.textContent = "AY 2024-25 (Expired)";
+        evalBtn.className = "px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-red-50 text-ust-crimson border border-red-200 hover:bg-red-100";
+      }
+    }
+
+    function toggleEvaluatorVerification() {
+      if (state.user.isVerified) {
+        applyVerificationTestState('expired');
+      } else {
+        applyVerificationTestState('valid');
+      }
+    }
+
+    // ==========================================
+    // TRUST RATING & SUSPENSION SYSTEM
+    // ==========================================
+    function checkSuspensionStatus() {
+      const banner = document.getElementById('suspension-banner');
+      const desc = document.getElementById('suspension-desc');
+      const evalLabel = document.getElementById('eval-rating-label');
+      const evalBtn = document.getElementById('eval-toggle-rating-btn');
+
+      if (state.user.trustRating < 3.0) {
+        state.user.isSuspended = true;
+        banner.classList.remove('hidden-force');
+        desc.textContent = `Trust rating dropped to ${state.user.trustRating.toFixed(1)} (< 3.0 threshold). Lending & borrowing locked.`;
+        evalLabel.textContent = `Trust ${state.user.trustRating.toFixed(1)} (Suspended)`;
+        evalBtn.className = "px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-red-50 text-ust-crimson border border-red-200 hover:bg-red-100";
+      } else {
+        state.user.isSuspended = false;
+        banner.classList.add('hidden-force');
+        evalLabel.textContent = `Trust ${state.user.trustRating.toFixed(1)} (Good)`;
+        evalBtn.className = "px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-amber-50 text-ust-deepGold border border-amber-200 hover:bg-amber-100";
+      }
+
+      // Update Verified Trusted Lender badge condition
+      const trustedBadge = document.getElementById('lender-trusted-badge');
+      if (trustedBadge) {
+        if (state.user.trustRating >= 4.8) {
+          trustedBadge.classList.remove('hidden-force');
+        } else {
+          trustedBadge.classList.add('hidden-force');
+        }
+      }
+
+      const ratingDisplay = document.getElementById('lender-rating-display');
+      if (ratingDisplay) {
+        ratingDisplay.textContent = `${state.user.trustRating.toFixed(1)}`;
+      }
+    }
+
+    function toggleEvaluatorRating() {
+      if (state.user.trustRating >= 3.0) {
+        state.user.trustRating = 2.8;
+        showToast("Evaluator: Rating dropped to 2.8. Account Suspended.");
+      } else {
+        state.user.trustRating = 4.9;
+        showToast("Evaluator: Rating restored to 4.9. Account Active.");
+      }
+      checkSuspensionStatus();
+      renderMarketplace();
+    }
+
+    function openAppealModal() {
+      document.getElementById('modal-appeal').classList.remove('hidden-force');
+    }
+
+    function restoreAccountRatingDemo() {
+      state.user.trustRating = 4.9;
+      checkSuspensionStatus();
+      closeModal('modal-appeal');
+      showToast("Account privileges fully restored to 4.9 trust rating");
+    }
+
+    function handleAppealSubmit(e) {
+      e.preventDefault();
+      const text = document.getElementById('appeal-text').value;
+      if (!text) return;
+      showToast("Appeal submitted to UST Student Council for review");
+      closeModal('modal-appeal');
+    }
+
+    // ==========================================
+    // TIGRENT PREMIUM LENDER SYSTEM (₱99/month)
+    // ==========================================
+    function togglePremiumStatus(isChecked) {
+      state.user.isPremiumLender = isChecked;
+      updatePremiumUI();
+      renderMarketplace();
+      showToast(isChecked ? "TigRent Premium Activated (₱99/mo)" : "TigRent Premium Deactivated");
+    }
+
+    function toggleEvaluatorPremium() {
+      const checkbox = document.getElementById('premium-switch-checkbox');
+      const newState = !state.user.isPremiumLender;
+      checkbox.checked = newState;
+      togglePremiumStatus(newState);
+    }
+
+    function updatePremiumUI() {
+      const proBadge = document.getElementById('header-pro-badge');
+      const analyticsSec = document.getElementById('analytics-section');
+      const evalLabel = document.getElementById('eval-premium-label');
+      const evalBtn = document.getElementById('eval-toggle-premium-btn');
+
+      if (state.user.isPremiumLender) {
+        proBadge.classList.remove('hidden-force');
+        analyticsSec.classList.remove('hidden-force');
+        evalLabel.textContent = "Premium: ON";
+        evalBtn.className = "px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-amber-100/60 text-ust-obsidian border border-ust-gold/50 hover:bg-amber-100";
+      } else {
+        proBadge.classList.add('hidden-force');
+        analyticsSec.classList.add('hidden-force');
+        evalLabel.textContent = "Premium: OFF";
+        evalBtn.className = "px-2.5 py-1 rounded-xl text-[11px] font-medium transition-all flex items-center gap-1 bg-stone-100 text-stone-600 border border-stone-200 hover:bg-stone-200";
+      }
+    }
+
+    // ==========================================
+    // MARKETPLACE RENDERING & FILTERING
+    // ==========================================
+    function renderCategoryPills() {
+      const container = document.getElementById('category-pills-container');
+      container.innerHTML = state.categories.map(cat => {
+        const isSelected = state.selectedCategory === cat.id;
+        return `
+          <button onclick="filterByCategory('${cat.id}')" class="px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all spring-trans ${
+            isSelected 
+              ? 'bg-ust-obsidian text-white shadow-xs' 
+              : 'apple-glass text-ust-espresso hover:text-ust-obsidian border border-black/[0.06]'
+          }">
+            ${cat.label}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function filterByCategory(catId) {
+      state.selectedCategory = catId;
+      renderCategoryPills();
+      renderMarketplace();
+    }
+
+    function filterByHub(hub) {
+      state.selectedHub = hub;
+      renderMarketplace();
+    }
+
+    function handleMarketplaceSearch(val) {
+      state.searchQuery = val.toLowerCase().trim();
+      const clearBtn = document.getElementById('search-clear-btn');
+      if (clearBtn) {
+        if (state.searchQuery) {
+          clearBtn.classList.remove('hidden-force');
+        } else {
+          clearBtn.classList.add('hidden-force');
+        }
+      }
+      renderMarketplace();
+    }
+
+    function clearSearch() {
+      document.getElementById('marketplace-search-input').value = '';
+      state.searchQuery = '';
+      document.getElementById('search-clear-btn').classList.add('hidden-force');
+      renderMarketplace();
+    }
+
+    function getSVGForCategory(iconType) {
+      switch (iconType) {
+        case 'calc':
+          return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>`;
+        case 'camera':
+          return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+        case 'drafting':
+          return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>`;
+        case 'projector':
+          return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="17" cy="12" r="3"/><line x1="7" y1="12" x2="7.01" y2="12"/></svg>`;
+        case 'med':
+          return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>`;
+        default:
+          return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`;
+      }
+    }
+
+    function renderMarketplace() {
+      const grid = document.getElementById('listings-grid');
+      const countLabel = document.getElementById('marketplace-count-label');
+
+      let filtered = state.listings.filter(item => {
+        const matchesCategory = state.selectedCategory === 'all' || item.category === state.selectedCategory;
+        const matchesHub = state.selectedHub === 'all' || item.hub === state.selectedHub;
+        const matchesSearch = !state.searchQuery || 
+          item.title.toLowerCase().includes(state.searchQuery) ||
+          item.category.toLowerCase().includes(state.searchQuery) ||
+          item.hub.toLowerCase().includes(state.searchQuery) ||
+          item.lenderName.toLowerCase().includes(state.searchQuery);
+        return matchesCategory && matchesHub && matchesSearch;
+      });
+
+      countLabel.textContent = `Showing ${filtered.length} items`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-8 text-center text-xs text-ust-espresso">
+            No equipment matching your filters. Try selecting "All Items" or "All UST Lobbies".
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const isFeatured = item.isFeatured && state.user.isPremiumLender;
+        return `
+          <div class="apple-glass-card rounded-2xl p-3.5 shadow-apple flex flex-col justify-between space-y-2.5 transition-all spring-hover ${
+            isFeatured ? 'border-ust-gold/60 ring-1 ring-ust-gold/40 bg-gradient-to-br from-amber-50/40 to-white/90' : 'border-white/80'
+          }">
+            <div class="space-y-1.5">
+              <div class="flex items-start justify-between gap-2">
+                <div class="w-10 h-10 rounded-xl bg-amber-100/70 text-ust-deepGold flex items-center justify-center shrink-0 border border-amber-200/50">
+                  ${getSVGForCategory(item.iconType)}
+                </div>
+
+                <div class="flex flex-col items-end">
+                  <span class="text-xs font-extrabold text-ust-obsidian">₱${item.dailyRate}<span class="text-[10px] font-normal text-ust-espresso">/day</span></span>
+                  <span class="text-[9.5px] text-emerald-700 font-semibold">₱${item.deposit} deposit</span>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="font-bold text-xs text-ust-obsidian leading-snug line-clamp-2">${item.title}</h4>
+                <p class="text-[10.5px] text-ust-espresso mt-0.5 line-clamp-1">${item.condition}</p>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-black/[0.05] space-y-2">
+              <div class="flex items-center justify-between text-[10.5px]">
+                <span class="text-ust-espresso flex items-center gap-1">
+                  <svg class="w-3 h-3 text-ust-deepGold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span class="truncate max-w-[130px]">${item.hub.replace(' Lobby', '')}</span>
+                </span>
+
+                <div class="flex items-center gap-1 font-semibold text-ust-obsidian">
+                  <svg class="w-3 h-3 fill-amber-400 stroke-amber-500" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span>${item.lenderRating}</span>
+                </div>
+              </div>
+
+              ${item.isTrusted ? `
+                <div class="flex items-center gap-1 text-[9.5px] font-bold text-ust-deepGold">
+                  <svg class="w-2.8 h-2.8 text-ust-deepGold" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span>Verified Trusted Lender</span>
+                </div>
+              ` : ''}
+
+              <button onclick="initiateBooking('${item.id}')" class="w-full bg-ust-obsidian hover:bg-black text-white font-bold py-2 rounded-xl text-xs transition-all spring-press shadow-xs flex items-center justify-center gap-1">
+                <span>Book Equipment</span>
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ==========================================
+    // BOOKING WORKFLOW & PAYMONGO DIGITAL CHECKOUT
+    // ==========================================
+    function initiateBooking(itemId) {
+      if (!state.user.isVerified) {
+        showToast("Borrowing Locked: RegForm AY is expired. Please verify AY 2026-2027.");
+        openVerificationModal();
+        return;
+      }
+
+      if (state.user.isSuspended) {
+        showToast("Borrowing Locked: Account trust rating is below 3.0 threshold.");
+        openAppealModal();
+        return;
+      }
+
+      const item = state.listings.find(x => x.id === itemId);
+      if (!item) return;
+
+      state.activeBookingItem = item;
+
+      document.getElementById('modal-book-title').textContent = item.title;
+      document.getElementById('modal-book-lender').textContent = `Lender: ${item.lenderName} (${item.lenderRating})`;
+      document.getElementById('modal-book-hub').textContent = item.hub;
+      document.getElementById('modal-book-icon-wrapper').innerHTML = getSVGForCategory(item.iconType);
+      
+      const slider = document.getElementById('modal-book-slider');
+      slider.value = 3;
+      updateBookingCalculations(3);
+
+      document.getElementById('modal-book-terms-check').checked = false;
+      document.getElementById('modal-booking').classList.remove('hidden-force');
+    }
+
+    function updateBookingCalculations(days) {
+      if (!state.activeBookingItem) return;
+      days = parseInt(days, 10);
+      const item = state.activeBookingItem;
+      const subtotal = item.dailyRate * days;
+      const totalUpfront = subtotal + item.deposit;
+
+      document.getElementById('modal-book-days-display').textContent = `${days} Days`;
+      document.getElementById('modal-book-days-calc').textContent = days;
+      document.getElementById('modal-book-daily-rate').textContent = `₱${item.dailyRate}.00 / day`;
+      document.getElementById('modal-book-subtotal-fee').textContent = `₱${subtotal}.00`;
+      document.getElementById('modal-book-deposit').textContent = `₱${item.deposit}.00`;
+      document.getElementById('modal-book-total-upfront').textContent = `₱${totalUpfront}.00`;
+    }
+
+    function confirmBookingPayment() {
+      const termsChecked = document.getElementById('modal-book-terms-check').checked;
+      if (!termsChecked) {
+        showToast("Please accept the mandatory UST Rental Agreement terms.");
+        return;
+      }
+
+      const item = state.activeBookingItem;
+      const days = parseInt(document.getElementById('modal-book-slider').value, 10);
+      const fee = item.dailyRate * days;
+      const deposit = item.deposit;
+      const total = fee + deposit;
+      const method = document.querySelector('input[name="paymongo-method"]:checked').value;
+
+      // Realistic PayMongo Ref ID
+      const refCode = (method === 'GCash' ? 'PM-GC-' : 'PM-MY-') + Math.floor(100000 + Math.random() * 900000);
+
+      // Create Shared Reactive Rental Record
+      const newRental = {
+        id: 'rent-' + (state.rentals.length + 101),
+        itemId: item.id,
+        title: item.title,
+        borrowerName: state.user.name,
+        lenderName: item.lenderName,
+        lenderRating: item.lenderRating,
+        pickupHub: item.hub,
+        startDate: 'Nov 17, 2026',
+        dueDate: `Nov ${17 + days}, 2026`,
+        dailyRate: item.dailyRate,
+        days: days,
+        rentalFee: fee,
+        deposit: deposit,
+        totalPaid: total,
+        status: 'Active',
+        extensionDays: 0,
+        extensionFee: 0,
+        extensionNote: '',
+        paymongoRef: refCode,
+        ratedByBorrower: false,
+        ratedByLender: false
+      };
+
+      state.rentals.unshift(newRental);
+
+      // Update Lender Financial Metrics
+      state.user.grossVolume += fee;
+      const commission = fee * 0.10;
+      state.user.commissionPaid += commission;
+      state.user.walletBalance += (fee - commission);
+      state.user.depositsHeld += deposit;
+
+      closeModal('modal-booking');
+      renderBorrowerRentals();
+      renderLenderHub();
+      showToast(`Payment Confirmed via ${method} (${refCode})`);
+    }
+
+    // ==========================================
+    // ACTIVE RENTALS RENDERING (BORROWER SIDE)
+    // ==========================================
+    function renderBorrowerRentals() {
+      const list = document.getElementById('borrower-rentals-list');
+      const badgeCount = document.getElementById('active-rentals-badge-count');
+      const bentoCount = document.getElementById('bento-active-count');
+      const bentoStatus = document.getElementById('bento-active-status');
+
+      const activeRentals = state.rentals.filter(r => r.status !== 'Completed' && r.status !== 'Cancelled');
+      badgeCount.textContent = `${activeRentals.length} Active`;
+      bentoCount.textContent = `${activeRentals.length} Item${activeRentals.length !== 1 ? 's' : ''}`;
+
+      if (activeRentals.length > 0) {
+        bentoStatus.textContent = `${activeRentals[0].title.split(' ')[0]} &bull; Due ${activeRentals[0].dueDate}`;
+      } else {
+        bentoStatus.textContent = "No pending active rentals";
+      }
+
+      if (state.rentals.length === 0) {
+        list.innerHTML = `
+          <div class="p-3 text-center text-xs text-ust-espresso">
+            No active or past rentals. Discover equipment in the catalog above!
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = state.rentals.map(rental => {
+        let statusBadgeClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+        if (rental.status === 'Pending Extension') {
+          statusBadgeClass = "bg-amber-100 text-amber-800 border-amber-300";
+        } else if (rental.status === 'Cancelled') {
+          statusBadgeClass = "bg-red-100 text-red-800 border-red-300";
+        } else if (rental.status === 'Completed') {
+          statusBadgeClass = "bg-stone-100 text-stone-700 border-stone-300";
+        }
+
+        return `
+          <div class="apple-glass rounded-xl p-3 border border-black/[0.06] space-y-2.5">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <h4 class="font-bold text-xs text-ust-obsidian leading-snug">${rental.title}</h4>
+                <div class="flex items-center gap-1.5 text-[10.5px] text-ust-espresso mt-0.5">
+                  <span>Due: <strong class="text-ust-obsidian">${rental.dueDate}</strong></span>
+                  <span>&bull;</span>
+                  <span>Hub: ${(rental.pickupHub || 'UST Campus').replace(' Lobby', '')}</span>
+                </div>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${statusBadgeClass} shrink-0">
+                ${rental.status}
+              </span>
+            </div>
+
+            <!-- Financial Upfront & PayMongo Info -->
+            <div class="bg-white/80 rounded-lg p-2 text-[10.5px] flex items-center justify-between border border-black/[0.04]">
+              <div>
+                <span class="text-ust-espresso">Rental Fee: <strong>₱${rental.rentalFee}</strong></span>
+                <span class="text-emerald-700 ml-2">Deposit: <strong>₱${rental.deposit}</strong></span>
+              </div>
+              <span class="text-[9.5px] font-mono text-ust-espresso">${rental.paymongoRef}</span>
+            </div>
+
+            <!-- Action Controls for Active Rentals -->
+            ${rental.status !== 'Completed' && rental.status !== 'Cancelled' ? `
+              <div class="flex items-center gap-1.5 pt-1">
+                ${rental.status === 'Active' ? `
+                  <button onclick="openExtensionModal('${rental.id}')" class="flex-1 apple-glass-gold py-1.5 rounded-lg text-[11px] font-bold text-ust-deepGold border border-ust-gold/40 hover:bg-ust-amber/20 spring-press text-center">
+                    Request Extension
+                  </button>
+                ` : `
+                  <div class="flex-1 py-1 rounded-lg text-[10.5px] text-center font-medium bg-amber-50 text-amber-800 border border-amber-200">
+                    Extension (+${rental.extensionDays}d) Pending Lender Approval
+                  </div>
+                `}
+
+                <button onclick="openCancellationModal('${rental.id}')" class="px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-stone-600 bg-stone-100 hover:bg-stone-200 spring-press">
+                  Cancel
+                </button>
+
+                <button onclick="openReturnSettlementModal('${rental.id}')" class="px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-white bg-emerald-600 hover:bg-emerald-700 spring-press">
+                  Return
+                </button>
+              </div>
+            ` : `
+              <div class="flex items-center justify-between pt-1">
+                <span class="text-[10px] text-ust-espresso italic">Transaction finalized</span>
+                ${!rental.ratedByBorrower ? `
+                  <button onclick="openRatingModal('${rental.id}', 'lender')" class="apple-glass-gold px-2.5 py-1 rounded-lg text-[11px] font-bold text-ust-deepGold border border-ust-gold/40 hover:bg-ust-amber/25 spring-press">
+                    Rate Lender
+                  </button>
+                ` : `
+                  <span class="text-[10px] font-semibold text-emerald-700">Lender Rated</span>
+                `}
+              </div>
+            `}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function scrollToRentals() {
+      const sec = document.getElementById('active-rentals-section');
+      if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ==========================================
+    // RENTAL EXTENSION WORKFLOW
+    // ==========================================
+    function openExtensionModal(rentalId) {
+      const rental = state.rentals.find(r => r.id === rentalId);
+      if (!rental) return;
+
+      state.activeExtensionRental = rental;
+      document.getElementById('ext-item-name').textContent = rental.title;
+      document.getElementById('ext-current-due').textContent = `Current Due: ${rental.dueDate}`;
+      document.getElementById('ext-daily-rate').textContent = `₱${rental.dailyRate}.00 / day`;
+      selectExtensionDays(2);
+      document.getElementById('modal-extension').classList.remove('hidden-force');
+    }
+
+    let currentSelectedExtraDays = 2;
+    function selectExtensionDays(days) {
+      currentSelectedExtraDays = days;
+      const rental = state.activeExtensionRental;
+      const fee = rental.dailyRate * days;
+
+      document.getElementById('ext-calc-days').textContent = days;
+      document.getElementById('ext-total-fee').textContent = `₱${fee}.00`;
+
+      const btns = document.querySelectorAll('.ext-btn');
+      btns.forEach(b => {
+        const d = parseInt(b.getAttribute('data-days'), 10);
+        if (d === days) {
+          b.className = "ext-btn py-2 rounded-xl text-xs font-bold border border-ust-gold bg-amber-50 text-ust-deepGold";
+        } else {
+          b.className = "ext-btn py-2 rounded-xl text-xs font-bold border border-black/[0.1] bg-white text-ust-obsidian hover:bg-stone-50";
+        }
+      });
+    }
+
+    function submitExtensionRequest() {
+      if (!state.activeExtensionRental) return;
+      const note = document.getElementById('ext-note-input').value.trim() || 'Extended student project workload';
+      const rental = state.activeExtensionRental;
+      
+      rental.status = 'Pending Extension';
+      rental.extensionDays = currentSelectedExtraDays;
+      rental.extensionFee = rental.dailyRate * currentSelectedExtraDays;
+      rental.extensionNote = note;
+
+      closeModal('modal-extension');
+      renderBorrowerRentals();
+      renderLenderHub();
+      showToast(`Extension Request (+${currentSelectedExtraDays}d) Submitted to ${rental.lenderName}`);
+    }
+
+    // LENDER SIDE: APPROVE OR REJECT EXTENSION
+    function approveExtension(rentalId) {
+      const rental = state.rentals.find(r => r.id === rentalId);
+      if (!rental) return;
+
+      // Update dates & fees
+      const extDays = rental.extensionDays || 2;
+      rental.days += extDays;
+      rental.rentalFee += rental.extensionFee;
+      rental.totalPaid += rental.extensionFee;
+      rental.dueDate = `Nov ${21 + extDays}, 2026`;
+      rental.status = 'Active (Extended)';
+
+      // Recalculate Lender Ledger
+      state.user.grossVolume += rental.extensionFee;
+      const feeCommission = rental.extensionFee * 0.10;
+      state.user.commissionPaid += feeCommission;
+      state.user.walletBalance += (rental.extensionFee - feeCommission);
+
+      renderBorrowerRentals();
+      renderLenderHub();
+      showToast(`Approved: Rental extended by +${extDays} days. ₱${rental.extensionFee * 0.9} credited.`);
+    }
+
+    function rejectExtension(rentalId) {
+      const rental = state.rentals.find(r => r.id === rentalId);
+      if (!rental) return;
+
+      rental.status = 'Active';
+      rental.extensionDays = 0;
+      rental.extensionFee = 0;
+
+      renderBorrowerRentals();
+      renderLenderHub();
+      showToast(`Extension request declined. Original return deadline retained.`);
+    }
+
+    // ==========================================
+    // CANCELLATION & REFUND LOGIC
+    // ==========================================
+    function openCancellationModal(rentalId) {
+      state.activeSettlementRental = state.rentals.find(r => r.id === rentalId);
+      document.getElementById('modal-cancellation').classList.remove('hidden-force');
+    }
+
+    function executeCancellationRefund(scenario) {
+      const rental = state.activeSettlementRental;
+      if (!rental) return;
+
+      let refundAmount = 0;
+      let lenderShare = 0;
+
+      if (scenario === 'early') {
+        // >24h: 100% rental fee + 100% deposit
+        refundAmount = rental.rentalFee + rental.deposit;
+        lenderShare = 0;
+        showToast(`Early Cancellation: Full 100% Refund (₱${refundAmount}) back to ${rental.borrowerName}`);
+      } else if (scenario === 'late') {
+        // <24h: 80% rental fee + 100% deposit (20% to lender)
+        lenderShare = rental.rentalFee * 0.20;
+        refundAmount = (rental.rentalFee * 0.80) + rental.deposit;
+        showToast(`Late Cancellation: ₱${refundAmount} refunded to borrower, ₱${lenderShare} paid to lender`);
+      } else if (scenario === 'lender') {
+        // Lender cancellation: 100% refund + trust penalty
+        refundAmount = rental.rentalFee + rental.deposit;
+        state.user.trustRating = Math.max(1.0, state.user.trustRating - 0.3);
+        checkSuspensionStatus();
+        showToast(`Lender Cancellation: Full 100% refund to borrower. Lender trust penalty applied (-0.3)`);
+      }
+
+      rental.status = 'Cancelled';
+      closeModal('modal-cancellation');
+      renderBorrowerRentals();
+      renderLenderHub();
+    }
+
+    // ==========================================
+    // RETURN CONDITION & DEPOSIT SETTLEMENT
+    // ==========================================
+    function openReturnSettlementModal(rentalId) {
+      const rental = state.rentals.find(r => r.id === rentalId);
+      if (!rental) return;
+
+      state.activeSettlementRental = rental;
+      document.getElementById('settle-item-title').textContent = rental.title;
+      document.getElementById('settle-deposit-original').textContent = `Deposit: ₱${rental.deposit}.00`;
+      document.getElementById('settle-calc-deposit').textContent = `₱${rental.deposit}.00`;
+
+      document.querySelector('input[name="return-condition"][value="normal"]').checked = true;
+      updateSettlementCalculation();
+      document.getElementById('modal-return-settlement').classList.remove('hidden-force');
+    }
+
+    function updateSettlementCalculation() {
+      const rental = state.activeSettlementRental;
+      if (!rental) return;
+
+      const condition = document.querySelector('input[name="return-condition"]:checked').value;
+      const deductionBox = document.getElementById('settle-deduction-inputs');
+      const lateOpts = document.getElementById('settle-late-options');
+      const damageOpts = document.getElementById('settle-damage-options');
+
+      let deduction = 0;
+
+      if (condition === 'normal') {
+        deductionBox.classList.add('hidden-force');
+        deduction = 0;
+      } else if (condition === 'late') {
+        deductionBox.classList.remove('hidden-force');
+        lateOpts.classList.remove('hidden-force');
+        damageOpts.classList.add('hidden-force');
+
+        const hours = parseInt(document.getElementById('settle-late-hours').value, 10);
+        if (hours === 2) {
+          deduction = rental.dailyRate * 0.50;
+        } else if (hours === 4) {
+          deduction = rental.dailyRate * 1.0;
+        } else {
+          deduction = rental.dailyRate * 1.5;
+        }
+      } else if (condition === 'damaged') {
+        deductionBox.classList.remove('hidden-force');
+        lateOpts.classList.add('hidden-force');
+        damageOpts.classList.remove('hidden-force');
+
+        deduction = parseFloat(document.getElementById('settle-damage-fee').value) || 0;
+      }
+
+      const netRefund = Math.max(0, rental.deposit - deduction);
+
+      document.getElementById('settle-calc-deductions').textContent = `-₱${deduction.toFixed(2)}`;
+      document.getElementById('settle-calc-net-refund').textContent = `₱${netRefund.toFixed(2)}`;
+    }
+
+    function finalizeReturnSettlement() {
+      const rental = state.activeSettlementRental;
+      if (!rental) return;
+
+      rental.status = 'Completed';
+      closeModal('modal-return-settlement');
+      renderBorrowerRentals();
+      renderLenderHub();
+      showToast(`Return Handoff Finalized! Deposit settled via PayMongo.`);
+
+      // Automatically launch Mutual Two-Way Rating prompt
+      setTimeout(() => {
+        openRatingModal(rental.id, 'lender');
+      }, 500);
+    }
+
+    // ==========================================
+    // MUTUAL TWO-WAY RATING SYSTEM
+    // ==========================================
+    function openRatingModal(rentalId, targetRole) {
+      const rental = state.rentals.find(r => r.id === rentalId);
+      if (!rental) return;
+
+      state.activeRatingTarget = { rental, targetRole };
+      document.getElementById('rating-modal-title').textContent = targetRole === 'lender' ? 'Rate Lender & Equipment' : 'Rate Student Borrower';
+      document.getElementById('rating-subtitle').textContent = targetRole === 'lender' 
+        ? `How was your exchange with ${rental.lenderName}?` 
+        : `How was your exchange with ${rental.borrowerName}?`;
+
+      selectStarRating(5);
+      document.getElementById('modal-rating').classList.remove('hidden-force');
+    }
+
+    function selectStarRating(stars) {
+      state.selectedStars = stars;
+      const btns = document.querySelectorAll('.star-btn');
+      btns.forEach((btn, idx) => {
+        const svg = btn.querySelector('svg');
+        if (idx < stars) {
+          svg.setAttribute('class', 'w-7 h-7 fill-amber-400 stroke-amber-500');
+        } else {
+          svg.setAttribute('class', 'w-7 h-7 fill-stone-200 stroke-stone-300');
+        }
+      });
+
+      const label = document.getElementById('star-rating-label');
+      if (stars === 5) label.textContent = "5.0 - Exceptional Thomasian Peer";
+      else if (stars === 4) label.textContent = "4.0 - Great & Reliable";
+      else if (stars === 3) label.textContent = "3.0 - Average Handshake";
+      else if (stars === 2) label.textContent = "2.0 - Subpar / Minor Issues";
+      else label.textContent = "1.0 - Disappointing / Late Violation";
+    }
+
+    function toggleRatingTag(btn) {
+      btn.classList.toggle('bg-ust-amber');
+      btn.classList.toggle('text-ust-obsidian');
+      btn.classList.toggle('border-ust-gold');
+    }
+
+    function submitMutualRating() {
+      if (!state.activeRatingTarget) return;
+      const { rental, targetRole } = state.activeRatingTarget;
+
+      if (targetRole === 'lender') {
+        rental.ratedByBorrower = true;
+        // Recalculate target lender rating
+        const newRating = ((rental.lenderRating * 20) + state.selectedStars) / 21;
+        rental.lenderRating = parseFloat(newRating.toFixed(1));
+        showToast(`Rating submitted! ${rental.lenderName}'s rating updated.`);
+      } else {
+        rental.ratedByLender = true;
+        // Recalculate user trust rating
+        const oldRating = state.user.trustRating;
+        const oldCount = state.user.ratingCount;
+        const updated = ((oldRating * oldCount) + state.selectedStars) / (oldCount + 1);
+        state.user.trustRating = parseFloat(updated.toFixed(1));
+        state.user.ratingCount += 1;
+        checkSuspensionStatus();
+        showToast(`Borrower rated! Community trust score updated.`);
+      }
+
+      closeModal('modal-rating');
+      renderBorrowerRentals();
+      renderLenderHub();
+      renderMarketplace();
+    }
+
+    // ==========================================
+    // LENDER HUB & STUDIO
+    // ==========================================
+    function renderLenderHub() {
+      // Financial figures
+      document.getElementById('lender-net-revenue').textContent = `₱${state.user.walletBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      document.getElementById('lender-gross-volume').textContent = `₱${state.user.grossVolume.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      document.getElementById('lender-platform-commission').textContent = `-₱${state.user.commissionPaid.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+      document.getElementById('lender-deposits-held').textContent = `₱${state.user.depositsHeld.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+
+      // Extension requests queue
+      const extList = document.getElementById('incoming-extensions-list');
+      const pendingCounter = document.getElementById('pending-extensions-counter');
+      const requestsBadge = document.getElementById('lender-requests-badge');
+
+      const pendingExts = state.rentals.filter(r => r.status === 'Pending Extension');
+      pendingCounter.textContent = `${pendingExts.length} Pending`;
+      requestsBadge.textContent = pendingExts.length;
+      if (pendingExts.length === 0) {
+        requestsBadge.classList.add('hidden-force');
+      } else {
+        requestsBadge.classList.remove('hidden-force');
+      }
+
+      if (pendingExts.length === 0) {
+        extList.innerHTML = `
+          <div class="p-3 text-center text-xs text-ust-espresso">
+            No pending rental extension requests from borrowers right now.
+          </div>
+        `;
+      } else {
+        extList.innerHTML = pendingExts.map(r => `
+          <div class="bg-white rounded-xl p-3 border border-amber-200/80 shadow-xs space-y-2">
+            <div class="flex items-start justify-between">
+              <div>
+                <h4 class="font-bold text-xs text-ust-obsidian">${r.title}</h4>
+                <span class="text-[10.5px] text-ust-espresso block">Borrower: <strong>${r.borrowerName}</strong></span>
+              </div>
+              <span class="text-xs font-extrabold text-ust-deepGold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                +${r.extensionDays} Days
+              </span>
+            </div>
+
+            <p class="text-[11px] text-ust-espresso italic bg-stone-50 rounded-lg p-2 border border-black/[0.04]">
+              "${r.extensionNote || 'Drafting presentation extension'}"
+            </p>
+
+            <div class="flex items-center justify-between text-xs pt-1">
+              <span class="text-ust-espresso">Extension Fee to Credit: <strong class="text-emerald-700">₱${(r.extensionFee * 0.9).toFixed(2)}</strong></span>
+              
+              <div class="flex items-center gap-1.5">
+                <button onclick="approveExtension('${r.id}')" class="px-3 py-1 rounded-lg text-[11px] font-bold text-white bg-emerald-600 hover:bg-emerald-700 spring-press">
+                  Approve
+                </button>
+                <button onclick="rejectExtension('${r.id}')" class="px-2.5 py-1 rounded-lg text-[11px] font-medium text-stone-600 bg-stone-100 hover:bg-stone-200 spring-press">
+                  Reject
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Active Lent Items
+      const lentList = document.getElementById('lender-lent-items-list');
+      const lentCount = document.getElementById('lent-items-count');
+      const activeLent = state.rentals.filter(r => r.status !== 'Completed' && r.status !== 'Cancelled');
+      lentCount.textContent = `${activeLent.length} Item${activeLent.length !== 1 ? 's' : ''}`;
+
+      if (activeLent.length === 0) {
+        lentList.innerHTML = `<div class="p-3 text-center text-xs text-ust-espresso">No equipment currently checked out by borrowers.</div>`;
+      } else {
+        lentList.innerHTML = activeLent.map(r => `
+          <div class="bg-white rounded-xl p-3 border border-black/[0.06] flex items-center justify-between gap-2 text-xs">
+            <div>
+              <span class="font-bold text-ust-obsidian block">${r.title}</span>
+              <span class="text-[10.5px] text-ust-espresso">Borrower: ${r.borrowerName} &bull; Due ${r.dueDate}</span>
+            </div>
+
+            <button onclick="openReturnSettlementModal('${r.id}')" class="apple-glass-gold px-2.5 py-1.5 rounded-lg text-[11px] font-bold text-ust-deepGold border border-ust-gold/40 hover:bg-ust-amber/20 spring-press shrink-0">
+              Inspect & Return
+            </button>
+          </div>
+        `).join('');
+      }
+
+      // Lender Inventory List
+      const invList = document.getElementById('lender-inventory-list');
+      invList.innerHTML = state.listings.slice(0, 4).map(item => `
+        <div class="apple-glass rounded-xl p-2.5 border border-black/[0.05] flex items-center justify-between gap-2 text-xs">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-amber-100 text-ust-deepGold flex items-center justify-center shrink-0">
+              ${getSVGForCategory(item.iconType)}
+            </div>
+            <div>
+              <span class="font-bold text-ust-obsidian block truncate max-w-[170px]">${item.title}</span>
+              <span class="text-[10px] text-ust-espresso">₱${item.dailyRate}/day &bull; ${item.hub.replace(' Lobby', '')}</span>
+            </div>
+          </div>
+
+          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
+            Available
+          </span>
+        </div>
+      `).join('');
+    }
+
+    function simulateLenderPayout() {
+      if (state.user.walletBalance <= 0) {
+        showToast("No accumulated balance available for withdrawal.");
+        return;
+      }
+      const payoutAmount = state.user.walletBalance;
+      const ref = "PM-PO-" + Math.floor(100000 + Math.random() * 900000);
+      state.user.walletBalance = 0;
+      renderLenderHub();
+      showToast(`Payout of ₱${payoutAmount.toFixed(2)} dispatched to GCash (${ref})`);
+    }
+
+    // ==========================================
+    // LIST NEW EQUIPMENT (LENDER)
+    // ==========================================
+    function openAddListingModal() {
+      if (!state.user.isVerified) {
+        showToast("Listing Locked: RegForm verification required for AY 2026-2027.");
+        openVerificationModal();
+        return;
+      }
+      if (state.user.isSuspended) {
+        showToast("Listing Locked: Trust rating dropped below 3.0 threshold.");
+        openAppealModal();
+        return;
+      }
+      document.getElementById('modal-add-listing').classList.remove('hidden-force');
+    }
+
+    function handlePublishListing(e) {
+      e.preventDefault();
+      const title = document.getElementById('new-item-title').value;
+      const cat = document.getElementById('new-item-category').value;
+      const hub = document.getElementById('new-item-hub').value;
+      const price = parseFloat(document.getElementById('new-item-price').value);
+      const deposit = parseFloat(document.getElementById('new-item-deposit').value);
+      const condition = document.getElementById('new-item-condition').value;
+
+      let icon = 'calc';
+      if (cat.includes('Camera')) icon = 'camera';
+      else if (cat.includes('Drafting')) icon = 'drafting';
+      else if (cat.includes('Projector')) icon = 'projector';
+      else if (cat.includes('Med')) icon = 'med';
+
+      const newItem = {
+        id: 'item-' + (state.listings.length + 1),
+        title: title,
+        category: cat,
+        hub: hub,
+        dailyRate: price,
+        deposit: deposit,
+        lenderName: state.user.name,
+        lenderRating: state.user.trustRating,
+        lenderCount: state.user.ratingCount,
+        isTrusted: state.user.trustRating >= 4.8,
+        isFeatured: state.user.isPremiumLender,
+        condition: condition,
+        iconType: icon
+      };
+
+      state.listings.unshift(newItem);
+      closeModal('modal-add-listing');
+      renderMarketplace();
+      renderLenderHub();
+      showToast("Published: Item is now live in the UST Marketplace!");
+    }
+
+    // ==========================================
+    // TERMS & CONDITIONS MODAL
+    // ==========================================
+    function openTermsModal() {
+      document.getElementById('modal-terms').classList.remove('hidden-force');
+    }
+
+    // ==========================================
+    // UI MODAL HELPERS & NOTIFICATIONS
+    // ==========================================
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden-force');
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = "apple-glass px-3.5 py-2.5 rounded-2xl shadow-apple text-xs font-semibold text-ust-obsidian border border-white/90 flex items-center gap-2 transform transition-all duration-300 pointer-events-auto translate-y-2 opacity-0";
+      toast.innerHTML = `
+        <div class="w-2 h-2 rounded-full bg-ust-gold shrink-0"></div>
+        <span class="leading-tight">${msg}</span>
+      `;
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function toggleDeviceFrame() {
+      const dev = document.getElementById('device-container');
+      const label = document.getElementById('eval-frame-label');
+      if (dev.classList.contains('max-w-[400px]')) {
+        dev.classList.remove('max-w-[400px]', 'h-[874px]', 'sm:rounded-[50px]', 'sm:border-[9px]');
+        dev.classList.add('max-w-2xl', 'min-h-[90vh]', 'rounded-3xl', 'border-0');
+        label.textContent = "Full Width";
+      } else {
+        dev.classList.add('max-w-[400px]', 'h-[874px]', 'sm:rounded-[50px]', 'sm:border-[9px]');
+        dev.classList.remove('max-w-2xl', 'min-h-[90vh]', 'rounded-3xl', 'border-0');
+        label.textContent = "iOS Frame";
+      }
+    }
+
+    function resetPrototypeData() {
+      location.reload();
+    }
+  </script>
+</body>
+</html>
